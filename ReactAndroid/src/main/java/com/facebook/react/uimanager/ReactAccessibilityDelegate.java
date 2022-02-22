@@ -29,7 +29,6 @@ import com.facebook.react.bridge.ReactNoCrashSoftException;
 import com.facebook.react.bridge.ReactSoftExceptionLogger;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
-import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import com.facebook.react.bridge.ReadableType;
 import com.facebook.react.bridge.UIManager;
 import com.facebook.react.bridge.WritableMap;
@@ -215,7 +214,7 @@ public class ReactAccessibilityDelegate extends AccessibilityDelegateCompat {
     // state is changeable.
     final ReadableMap accessibilityState = (ReadableMap) host.getTag(R.id.accessibility_state);
     if (accessibilityState != null) {
-      setState(info, accessibilityState, host.getContext());
+      ReactAccessibilityDelegateHelper.setState(info, accessibilityState, host.getContext());
     }
     final ReadableArray accessibilityActions =
         (ReadableArray) host.getTag(R.id.accessibility_actions);
@@ -351,29 +350,6 @@ public class ReactAccessibilityDelegate extends AccessibilityDelegateCompat {
       return true;
     }
     return super.performAccessibilityAction(host, action, args);
-  }
-
-  private static void setState(
-      AccessibilityNodeInfoCompat info, ReadableMap accessibilityState, Context context) {
-    final ReadableMapKeySetIterator i = accessibilityState.keySetIterator();
-    while (i.hasNextKey()) {
-      final String state = i.nextKey();
-      final Dynamic value = accessibilityState.getDynamic(state);
-      if (state.equals(STATE_SELECTED) && value.getType() == ReadableType.Boolean) {
-        info.setSelected(value.asBoolean());
-      } else if (state.equals(STATE_DISABLED) && value.getType() == ReadableType.Boolean) {
-        info.setEnabled(!value.asBoolean());
-      } else if (state.equals(STATE_CHECKED) && value.getType() == ReadableType.Boolean) {
-        final boolean boolValue = value.asBoolean();
-        info.setCheckable(true);
-        info.setChecked(boolValue);
-        if (info.getClassName().equals(AccessibilityRole.getValue(AccessibilityRole.SWITCH))) {
-          info.setText(
-              context.getString(
-                  boolValue ? R.string.state_on_description : R.string.state_off_description));
-        }
-      }
-    }
   }
 
   /** Strings for setting the Role Description in english */
