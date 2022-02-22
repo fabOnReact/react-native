@@ -10,14 +10,26 @@ package com.facebook.react.uimanager;
 import android.content.Context;
 import androidx.annotation.Nullable;
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat.AccessibilityActionCompat;
 import com.facebook.react.R;
 import com.facebook.react.bridge.Dynamic;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import com.facebook.react.bridge.ReadableType;
+import java.util.HashMap;
 
 /** Helper class that deals with emitting Scroll Events. */
 public class ReactAccessibilityDelegateHelper {
+  public static final String TOP_ACCESSIBILITY_ACTION_EVENT = "topAccessibilityAction";
+  public static final HashMap<String, Integer> sActionIdMap = new HashMap<>();
+
+  static {
+    sActionIdMap.put("activate", AccessibilityActionCompat.ACTION_CLICK.getId());
+    sActionIdMap.put("longpress", AccessibilityActionCompat.ACTION_LONG_CLICK.getId());
+    sActionIdMap.put("increment", AccessibilityActionCompat.ACTION_SCROLL_FORWARD.getId());
+    sActionIdMap.put("decrement", AccessibilityActionCompat.ACTION_SCROLL_BACKWARD.getId());
+  }
+
   /**
    * These roles are defined by Google's TalkBack screen reader, and this list should be kept up to
    * date with their implementation. Details can be seen in their source code here:

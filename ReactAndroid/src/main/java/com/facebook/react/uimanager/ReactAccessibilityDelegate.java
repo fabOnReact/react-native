@@ -44,19 +44,9 @@ import java.util.HashMap;
 public class ReactAccessibilityDelegate extends AccessibilityDelegateCompat {
 
   private static final String TAG = "ReactAccessibilityDelegate";
-  public static final String TOP_ACCESSIBILITY_ACTION_EVENT = "topAccessibilityAction";
   private static int sCounter = 0x3f000000;
   private static final int TIMEOUT_SEND_ACCESSIBILITY_EVENT = 200;
   private static final int SEND_EVENT = 1;
-
-  public static final HashMap<String, Integer> sActionIdMap = new HashMap<>();
-
-  static {
-    sActionIdMap.put("activate", AccessibilityActionCompat.ACTION_CLICK.getId());
-    sActionIdMap.put("longpress", AccessibilityActionCompat.ACTION_LONG_CLICK.getId());
-    sActionIdMap.put("increment", AccessibilityActionCompat.ACTION_SCROLL_FORWARD.getId());
-    sActionIdMap.put("decrement", AccessibilityActionCompat.ACTION_SCROLL_BACKWARD.getId());
-  }
 
   private Handler mHandler;
 
@@ -226,8 +216,8 @@ public class ReactAccessibilityDelegate extends AccessibilityDelegateCompat {
         }
         int actionId = sCounter;
         String actionLabel = action.hasKey("label") ? action.getString("label") : null;
-        if (sActionIdMap.containsKey(action.getString("name"))) {
-          actionId = sActionIdMap.get(action.getString("name"));
+        if (ReactAccessibilityDelegateHelper.sActionIdMap.containsKey(action.getString("name"))) {
+          actionId = ReactAccessibilityDelegateHelper.sActionIdMap.get(action.getString("name"));
         } else {
           sCounter++;
         }
@@ -320,7 +310,7 @@ public class ReactAccessibilityDelegate extends AccessibilityDelegateCompat {
                   new Event(surfaceId, reactTag) {
                     @Override
                     public String getEventName() {
-                      return TOP_ACCESSIBILITY_ACTION_EVENT;
+                      return ReactAccessibilityDelegateHelper.TOP_ACCESSIBILITY_ACTION_EVENT;
                     }
 
                     @Override
