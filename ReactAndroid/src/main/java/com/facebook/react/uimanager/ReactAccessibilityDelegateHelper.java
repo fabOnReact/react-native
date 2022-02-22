@@ -53,7 +53,16 @@ public class ReactAccessibilityDelegateHelper {
     TABLIST,
     TIMER,
     LIST,
-    TOOLBAR
+    TOOLBAR;
+
+    public static AccessibilityRole fromValue(@Nullable String value) {
+      for (AccessibilityRole role : AccessibilityRole.values()) {
+        if (role.name().equalsIgnoreCase(value)) {
+          return role;
+        }
+      }
+      throw new IllegalArgumentException("Invalid accessibility role value: " + value);
+    }
   };
 
   public static String getAccessibilityValue(AccessibilityRole role) {
@@ -104,15 +113,6 @@ public class ReactAccessibilityDelegateHelper {
       default:
         throw new IllegalArgumentException("Invalid accessibility role value: " + role);
     }
-  }
-
-  public static AccessibilityRole fromValue(@Nullable String value) {
-    for (AccessibilityRole role : AccessibilityRole.values()) {
-      if (role.name().equalsIgnoreCase(value)) {
-        return role;
-      }
-    }
-    throw new IllegalArgumentException("Invalid accessibility role value: " + value);
   }
 
   private static final String TAG = "ReactAccessibilityDelegateHelper ";
