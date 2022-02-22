@@ -53,66 +53,66 @@ public class ReactAccessibilityDelegateHelper {
     TABLIST,
     TIMER,
     LIST,
-    TOOLBAR;
+    TOOLBAR
+  };
 
-    public static String getValue(AccessibilityRole role) {
-      switch (role) {
-        case BUTTON:
-          return "android.widget.Button";
-        case TOGGLEBUTTON:
-          return "android.widget.ToggleButton";
-        case SEARCH:
-          return "android.widget.EditText";
-        case IMAGE:
-          return "android.widget.ImageView";
-        case IMAGEBUTTON:
-          return "android.widget.ImageButon";
-        case KEYBOARDKEY:
-          return "android.inputmethodservice.Keyboard$Key";
-        case TEXT:
-          return "android.widget.TextView";
-        case ADJUSTABLE:
-          return "android.widget.SeekBar";
-        case CHECKBOX:
-          return "android.widget.CheckBox";
-        case RADIO:
-          return "android.widget.RadioButton";
-        case SPINBUTTON:
-          return "android.widget.SpinButton";
-        case SWITCH:
-          return "android.widget.Switch";
-        case LIST:
-          return "android.widget.AbsListView";
-        case NONE:
-        case LINK:
-        case SUMMARY:
-        case HEADER:
-        case ALERT:
-        case COMBOBOX:
-        case MENU:
-        case MENUBAR:
-        case MENUITEM:
-        case PROGRESSBAR:
-        case RADIOGROUP:
-        case SCROLLBAR:
-        case TAB:
-        case TABLIST:
-        case TIMER:
-        case TOOLBAR:
-          return "android.view.View";
-        default:
-          throw new IllegalArgumentException("Invalid accessibility role value: " + role);
+  public static String getAccessibilityValue(AccessibilityRole role) {
+    switch (role) {
+      case BUTTON:
+        return "android.widget.Button";
+      case TOGGLEBUTTON:
+        return "android.widget.ToggleButton";
+      case SEARCH:
+        return "android.widget.EditText";
+      case IMAGE:
+        return "android.widget.ImageView";
+      case IMAGEBUTTON:
+        return "android.widget.ImageButon";
+      case KEYBOARDKEY:
+        return "android.inputmethodservice.Keyboard$Key";
+      case TEXT:
+        return "android.widget.TextView";
+      case ADJUSTABLE:
+        return "android.widget.SeekBar";
+      case CHECKBOX:
+        return "android.widget.CheckBox";
+      case RADIO:
+        return "android.widget.RadioButton";
+      case SPINBUTTON:
+        return "android.widget.SpinButton";
+      case SWITCH:
+        return "android.widget.Switch";
+      case LIST:
+        return "android.widget.AbsListView";
+      case NONE:
+      case LINK:
+      case SUMMARY:
+      case HEADER:
+      case ALERT:
+      case COMBOBOX:
+      case MENU:
+      case MENUBAR:
+      case MENUITEM:
+      case PROGRESSBAR:
+      case RADIOGROUP:
+      case SCROLLBAR:
+      case TAB:
+      case TABLIST:
+      case TIMER:
+      case TOOLBAR:
+        return "android.view.View";
+      default:
+        throw new IllegalArgumentException("Invalid accessibility role value: " + role);
+    }
+  }
+
+  public static AccessibilityRole fromValue(@Nullable String value) {
+    for (AccessibilityRole role : AccessibilityRole.values()) {
+      if (role.name().equalsIgnoreCase(value)) {
+        return role;
       }
     }
-
-    public static AccessibilityRole fromValue(@Nullable String value) {
-      for (AccessibilityRole role : AccessibilityRole.values()) {
-        if (role.name().equalsIgnoreCase(value)) {
-          return role;
-        }
-      }
-      throw new IllegalArgumentException("Invalid accessibility role value: " + value);
-    }
+    throw new IllegalArgumentException("Invalid accessibility role value: " + value);
   }
 
   private static final String TAG = "ReactAccessibilityDelegateHelper ";
@@ -135,7 +135,7 @@ public class ReactAccessibilityDelegateHelper {
         final boolean boolValue = value.asBoolean();
         info.setCheckable(true);
         info.setChecked(boolValue);
-        if (info.getClassName().equals(AccessibilityRole.getValue(AccessibilityRole.SWITCH))) {
+        if (info.getClassName().equals(getAccessibilityValue(AccessibilityRole.SWITCH))) {
           info.setText(
               context.getString(
                   boolValue ? R.string.state_on_description : R.string.state_off_description));
