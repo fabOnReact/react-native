@@ -31,7 +31,6 @@ import android.widget.ScrollView;
 import androidx.annotation.Nullable;
 import androidx.core.view.AccessibilityDelegateCompat;
 import androidx.core.view.ViewCompat;
-import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 import com.facebook.common.logging.FLog;
 import com.facebook.infer.annotation.Assertions;
 import com.facebook.react.R;
@@ -188,40 +187,41 @@ public class ReactScrollView extends ScrollView
             }
           }
 
+          /*
           @Override
           public void onInitializeAccessibilityNodeInfo(
               View host, AccessibilityNodeInfoCompat info) {
             super.onInitializeAccessibilityNodeInfo(host, info);
-
-            final ReactAccessibilityDelegate.AccessibilityRole accessibilityRole =
-                (ReactAccessibilityDelegate.AccessibilityRole) host.getTag(R.id.accessibility_role);
-
-            if (accessibilityRole != null) {
-              ReactAccessibilityDelegate.setRole(info, accessibilityRole, host.getContext());
-            }
-
-            final ReadableMap accessibilityCollection =
-                (ReadableMap) host.getTag(R.id.accessibility_collection);
-
-            if (accessibilityCollection != null) {
-              int rowCount = accessibilityCollection.getInt("rowCount");
-              int columnCount = accessibilityCollection.getInt("columnCount");
-              boolean hierarchical = accessibilityCollection.getBoolean("hierarchical");
-
-              AccessibilityNodeInfoCompat.CollectionInfoCompat collectionInfoCompat =
-                  AccessibilityNodeInfoCompat.CollectionInfoCompat.obtain(
-                      rowCount, columnCount, hierarchical);
-              info.setCollectionInfo(collectionInfoCompat);
-            }
-
-            info.setScrollable(mScrollEnabled);
           }
+          */
         });
   }
 
   @Override
   public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info) {
     super.onInitializeAccessibilityNodeInfo(info);
+
+    final ReactAccessibilityDelegate.AccessibilityRole accessibilityRole =
+        (ReactAccessibilityDelegate.AccessibilityRole) getTag(R.id.accessibility_role);
+
+    if (accessibilityRole != null) {
+      AccessibilityNodeInfoCompat infoCompat = (AccessibilityNodeInfoCompat) info;
+      ReactAccessibilityDelegate.setRole(infoCompat, accessibilityRole, getContext());
+    }
+
+    final ReadableMap accessibilityCollection = (ReadableMap) getTag(R.id.accessibility_collection);
+
+    if (accessibilityCollection != null) {
+      int rowCount = accessibilityCollection.getInt("rowCount");
+      int columnCount = accessibilityCollection.getInt("columnCount");
+      boolean hierarchical = accessibilityCollection.getBoolean("hierarchical");
+
+      AccessibilityNodeInfo.CollectionInfo collectionInfo =
+          AccessibilityNodeInfo.CollectionInfo.obtain(rowCount, columnCount, hierarchical);
+      info.setCollectionInfo(collectionInfo);
+    }
+
+    info.setScrollable(mScrollEnabled);
 
     // Expose the testID prop as the resource-id name of the view. Black-box E2E/UI testing
     // frameworks, which interact with the UI through the accessibility framework, do not have
