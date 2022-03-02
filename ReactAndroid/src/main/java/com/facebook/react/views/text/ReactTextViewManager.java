@@ -60,31 +60,11 @@ public class ReactTextViewManager
   @Override
   public void updateExtraData(ReactTextView view, Object extraData) {
     ReactTextUpdate update = (ReactTextUpdate) extraData;
-    Spannable spannable = update.getText();
     if (update.containsImages()) {
+      Spannable spannable = update.getText();
       TextInlineImageSpan.possiblyUpdateInlineImageSpans(spannable, view);
     }
     view.setText(update);
-
-    // If this text view contains any clickable spans, set a view tag and reset the accessibility
-    // delegate so that these can be picked up by the accessibility system.
-    /*
-    ReactClickableSpan[] clickableSpans =
-        spannable.getSpans(0, update.getText().length(), ReactClickableSpan.class);
-        */
-
-    /*
-    if (clickableSpans.length > 0) {
-      Log.w(
-          "TESTING::ReactTextViewManager",
-          "view.mAccessibilityLinks: " + (view.mAccessibilityLinks));
-      view.setTag(
-          R.id.accessibility_links,
-          new ReactTextAccessibilityDelegate.AccessibilityLinks(clickableSpans, spannable));
-      ReactTextAccessibilityDelegate.resetDelegate(
-          view, view.isFocusable(), view.getImportantForAccessibility());
-    }
-    */
   }
 
   @Override
