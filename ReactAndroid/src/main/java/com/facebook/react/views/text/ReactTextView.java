@@ -65,11 +65,11 @@ public class ReactTextView extends AppCompatTextView implements ReactCompoundVie
   private boolean mAdjustsFontSizeToFit = false;
   private int mLinkifyMaskType = 0;
   private boolean mNotifyOnInlineViewLayout;
-  public boolean mTextIsSelectable = false;
+  private boolean mTextIsSelectable = false;
 
   private ReactViewBackgroundManager mReactBackgroundManager;
   private Spannable mSpanned;
-  public AccessibilityLinks mAccessibilityLinks;
+  private AccessibilityLinks mAccessibilityLinks;
 
   public ReactTextView(Context context) {
     super(context);
@@ -579,14 +579,6 @@ public class ReactTextView extends AppCompatTextView implements ReactCompoundVie
   public Spannable getSpanned() {
     return mSpanned;
   }
-
-  /*
-  public ReactClickableSpan[] getClickableSpans() {
-    ReactClickableSpan[] clickableSpans =
-        mSpanned.getSpans(0, getText().length(), ReactClickableSpan.class);
-    return clickableSpans;
-  }
-  */
 
   public void setLinkifyMask(int mask) {
     mLinkifyMaskType = mask;
