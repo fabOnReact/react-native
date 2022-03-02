@@ -10,7 +10,6 @@ package com.facebook.react.views.text;
 import android.content.Context;
 import android.text.Spannable;
 import android.view.View;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableNativeMap;
@@ -68,16 +67,6 @@ public class ReactTextViewManager
   }
 
   @Override
-  protected void onAfterUpdateTransaction(@NonNull ReactTextView view) {
-    updateViewAccessibility(view);
-  }
-
-  private void updateViewAccessibility(@NonNull View view) {
-    ReactTextAccessibilityDelegate.setDelegate(
-        view, view.isFocusable(), view.getImportantForAccessibility());
-  }
-
-  @Override
   public ReactTextShadowNode createShadowNodeInstance() {
     return new ReactTextShadowNode();
   }
@@ -90,6 +79,20 @@ public class ReactTextViewManager
   @Override
   public Class<ReactTextShadowNode> getShadowNodeClass() {
     return ReactTextShadowNode.class;
+  }
+
+  @Override
+  protected void onAfterUpdateTransaction(ReactTextView view) {
+    super.onAfterUpdateTransaction(view);
+    view.updateView();
+    if (view != null) {
+      updateViewAccessibility(view);
+    }
+  }
+
+  private void updateViewAccessibility(View view) {
+    ReactTextAccessibilityDelegate.setDelegate(
+        view, view.isFocusable(), view.getImportantForAccessibility());
   }
 
   public boolean needsCustomLayoutForChildren() {
