@@ -11,7 +11,6 @@ import static com.facebook.react.views.text.TextAttributeProps.UNSET;
 
 import android.text.Layout;
 import android.text.Spannable;
-import javax.annotation.Nullable;
 
 /**
  * Class that contains the data needed for a text update. Used by both <Text/> and <TextInput/>
@@ -156,7 +155,7 @@ public class ReactTextUpdate {
     return reactTextUpdate;
   }
 
-  public @Nullable String getErrorMessage() {
+  public String getErrorMessage() {
     return mErrorMessage;
   }
 
