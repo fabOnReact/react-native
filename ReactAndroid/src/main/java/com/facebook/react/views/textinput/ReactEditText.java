@@ -514,7 +514,7 @@ public class ReactEditText extends AppCompatEditText
     if (!canUpdateWithEventCount(eventCounter)) {
       return;
     }
-    if (errorMessage == null) {
+    if (errorMessage == null && getError() != null) {
       setError(null);
     } else if (errorMessage.isEmpty() && getError() != null) {
       setError(null);
