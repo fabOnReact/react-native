@@ -23,7 +23,6 @@ import android.text.Layout;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -1302,7 +1301,6 @@ public class ReactTextInputManager extends BaseViewManager<ReactEditText, Layout
     }
 
     ReadableNativeMap state = stateWrapper.getStateData();
-    Log.w("TESTING::ReactTextInputManager", "state: " + (state));
 
     if (state == null) {
       return null;

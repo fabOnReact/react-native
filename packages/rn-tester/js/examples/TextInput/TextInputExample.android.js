@@ -148,4 +148,312 @@ exports.title = 'TextInput';
 exports.documentationURL = 'https://reactnative.dev/docs/textinput';
 exports.category = 'Basic';
 exports.description = 'Single and multi-line text inputs.';
-exports.examples = ([...TextInputSharedExamples]: Array<RNTesterModuleExample>);
+exports.examples = ([
+  ...TextInputSharedExamples,
+  {
+    title: 'Colors and text inputs',
+    render: function (): React.Node {
+      return (
+        <View>
+          <TextInput
+            style={[styles.singleLine]}
+            defaultValue="Default color text"
+          />
+          <TextInput
+            style={[styles.singleLine, {color: 'green'}]}
+            defaultValue="Green Text"
+          />
+          <TextInput
+            placeholder="Default placeholder text color"
+            style={styles.singleLine}
+          />
+          <TextInput
+            placeholder="Red placeholder text color"
+            placeholderTextColor="red"
+            style={styles.singleLine}
+          />
+          <TextInput
+            placeholder="Default underline color"
+            style={styles.singleLine}
+          />
+          <TextInput
+            placeholder="Blue underline color"
+            style={styles.singleLine}
+            underlineColorAndroid="blue"
+          />
+          <TextInput
+            defaultValue="Same BackgroundColor as View "
+            style={[
+              styles.singleLine,
+              {backgroundColor: 'rgba(100, 100, 100, 0.3)'},
+            ]}>
+            <Text style={{backgroundColor: 'rgba(100, 100, 100, 0.3)'}}>
+              Darker backgroundColor
+            </Text>
+          </TextInput>
+          <TextInput
+            defaultValue="Highlight Color is red"
+            selectionColor={'red'}
+            style={styles.singleLine}
+          />
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Font Weight',
+    render: function (): React.Node {
+      return (
+        <View>
+          <TextInput
+            defaultValue="Font Weight (default)"
+            style={[styles.singleLine]}
+          />
+          {[
+            'normal',
+            'bold',
+            '900',
+            '800',
+            '700',
+            '600',
+            '500',
+            '400',
+            '300',
+            '200',
+            '100',
+          ].map(fontWeight => (
+            <TextInput
+              defaultValue={`Font Weight (${fontWeight})`}
+              key={fontWeight}
+              style={[styles.singleLine, {fontWeight}]}
+            />
+          ))}
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Text input, themes and heights',
+    render: function (): React.Node {
+      return (
+        <TextInput
+          placeholder="If you set height, beware of padding set from themes"
+          style={[styles.singleLineWithHeightTextInput]}
+        />
+      );
+    },
+  },
+  {
+    title: 'letterSpacing',
+    render: function (): React.Node {
+      return (
+        <View>
+          <TextInput
+            style={[styles.singleLine, {letterSpacing: 0}]}
+            placeholder="letterSpacing = 0"
+          />
+          <TextInput
+            style={[styles.singleLine, {letterSpacing: 2}]}
+            placeholder="letterSpacing = 2"
+          />
+          <TextInput
+            style={[styles.singleLine, {letterSpacing: 9}]}
+            placeholder="letterSpacing = 9"
+          />
+          <TextInput
+            style={[styles.singleLine, {letterSpacing: -1}]}
+            placeholder="letterSpacing = -1"
+          />
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Passwords',
+    render: function (): React.Node {
+      return (
+        <View>
+          <TextInput
+            defaultValue="iloveturtles"
+            secureTextEntry={true}
+            style={styles.singleLine}
+          />
+          <TextInput
+            secureTextEntry={true}
+            style={[styles.singleLine, {color: 'red'}]}
+            placeholder="color is supported too"
+            placeholderTextColor="red"
+          />
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Editable',
+    render: function (): React.Node {
+      return (
+        <TextInput
+          defaultValue="Can't touch this! (>'-')> ^(' - ')^ <('-'<) (>'-')> ^(' - ')^"
+          editable={false}
+          style={styles.singleLine}
+        />
+      );
+    },
+  },
+  {
+    title: 'Multiline',
+    render: function (): React.Node {
+      return (
+        <View>
+          <TextInput
+            autoCorrect={true}
+            placeholder="multiline, aligned top-left"
+            placeholderTextColor="red"
+            multiline={true}
+            style={[
+              styles.multiline,
+              {textAlign: 'left', textAlignVertical: 'top'},
+            ]}
+          />
+          <TextInput
+            autoCorrect={true}
+            placeholder="multiline, aligned center"
+            placeholderTextColor="green"
+            multiline={true}
+            style={[
+              styles.multiline,
+              {textAlign: 'center', textAlignVertical: 'center'},
+            ]}
+          />
+          <TextInput
+            autoCorrect={true}
+            multiline={true}
+            style={[
+              styles.multiline,
+              {color: 'blue'},
+              {textAlign: 'right', textAlignVertical: 'bottom'},
+            ]}>
+            <Text style={styles.multiline}>
+              multiline with children, aligned bottom-right
+            </Text>
+          </TextInput>
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Fixed number of lines',
+    platform: 'android',
+    render: function (): React.Node {
+      return (
+        <View>
+          <TextInput
+            numberOfLines={2}
+            multiline={true}
+            placeholder="Two line input"
+          />
+          <TextInput
+            numberOfLines={5}
+            multiline={true}
+            placeholder="Five line input"
+          />
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Auto-expanding',
+    render: function (): React.Node {
+      return (
+        <View>
+          <AutogrowingTextInputExample
+            enablesReturnKeyAutomatically={true}
+            returnKeyType="done"
+            multiline={true}
+            style={{maxHeight: 400, minHeight: 20, backgroundColor: '#eeeeee'}}>
+            generic generic generic
+            <Text style={{fontSize: 6, color: 'red'}}>
+              small small small small small small
+            </Text>
+            <Text>regular regular</Text>
+            <Text style={{fontSize: 30, color: 'green'}}>
+              huge huge huge huge huge
+            </Text>
+            generic generic generic
+          </AutogrowingTextInputExample>
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Return key',
+    render: function (): React.Node {
+      const returnKeyTypes = [
+        'none',
+        'go',
+        'search',
+        'send',
+        'done',
+        'previous',
+        'next',
+      ];
+      const returnKeyLabels = ['Compile', 'React Native'];
+      const examples = returnKeyTypes.map(type => {
+        return (
+          <TextInput
+            key={type}
+            returnKeyType={type}
+            placeholder={'returnKeyType: ' + type}
+            style={styles.singleLine}
+          />
+        );
+      });
+      const types = returnKeyLabels.map(type => {
+        return (
+          <TextInput
+            key={type}
+            returnKeyLabel={type}
+            placeholder={'returnKeyLabel: ' + type}
+            style={styles.singleLine}
+          />
+        );
+      });
+      return (
+        <View>
+          {examples}
+          {types}
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Inline Images',
+    render: function (): React.Node {
+      return (
+        <View>
+          <TextInput
+            inlineImageLeft="ic_menu_black_24dp"
+            placeholder="This has drawableLeft set"
+            style={styles.singleLine}
+          />
+          <TextInput
+            inlineImageLeft="ic_menu_black_24dp"
+            inlineImagePadding={30}
+            placeholder="This has drawableLeft and drawablePadding set"
+            style={styles.singleLine}
+          />
+          <TextInput
+            placeholder="This does not have drawable props set"
+            style={styles.singleLine}
+          />
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Toggle Default Padding',
+    render: function (): React.Node {
+      return <ToggleDefaultPaddingExample />;
+    },
+  },
+]: Array<RNTesterModuleExample>);
