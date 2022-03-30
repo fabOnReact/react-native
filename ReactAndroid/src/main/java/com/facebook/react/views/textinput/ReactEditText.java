@@ -511,10 +511,15 @@ public class ReactEditText extends AppCompatEditText
    * @param errorMessage
    */
   public void maybeSetErrorMessage(int eventCounter, String errorMessage) {
-    if (!canUpdateWithEventCount(eventCounter) || getError() == errorMessage) {
+    if (!canUpdateWithEventCount(eventCounter)) {
       return;
     }
-    setError(errorMessage);
+    if (errorMessage.isEmpty() && getError() != null) {
+      setError(null);
+    }
+    if (!errorMessage.isEmpty() && getError() != errorMessage) {
+      setError(errorMessage);
+    }
   }
 
   public void maybeSetTextFromJS(ReactTextUpdate reactTextUpdate) {
