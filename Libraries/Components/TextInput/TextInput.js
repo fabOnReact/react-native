@@ -813,6 +813,7 @@ type ImperativeMethods = $ReadOnly<{|
   isFocused: () => boolean,
   getNativeRef: () => ?React.ElementRef<HostComponent<mixed>>,
   setSelection: (start: number, end: number) => void,
+  setScreenreaderError: (screnreaderError: string) => void,
 |}>;
 
 const emptyFunctionThatReturnsTrue = () => true;
@@ -1014,6 +1015,7 @@ function InternalTextInput(props: Props): React.Node {
         text,
         selection?.start ?? -1,
         selection?.end ?? -1,
+        props.screenreaderError,
       );
     }
   }, [
@@ -1052,6 +1054,7 @@ function InternalTextInput(props: Props): React.Node {
         '',
         0,
         0,
+        '',
       );
     }
   }
@@ -1064,6 +1067,21 @@ function InternalTextInput(props: Props): React.Node {
         null,
         start,
         end,
+        props.screenreaderError,
+      );
+    }
+  }
+
+  function setScreenreaderError(screenreaderError: string): void {
+    const {selection} = lastNativeSelectionState;
+    if (inputRef.current != null) {
+      viewCommands.setTextAndSelection(
+        inputRef.current,
+        mostRecentEventCount,
+        null,
+        selection?.start ?? -1,
+        selection?.end ?? -1,
+        screenreaderError,
       );
     }
   }
@@ -1109,6 +1127,7 @@ function InternalTextInput(props: Props): React.Node {
         ref.isFocused = isFocused;
         ref.getNativeRef = getNativeRef;
         ref.setSelection = setSelection;
+        ref.setScreenreaderError = setScreenreaderError;
       }
     },
   });

@@ -125,7 +125,8 @@ RCT_EXPORT_METHOD(setTextAndSelection : (nonnull NSNumber *)viewTag
                  mostRecentEventCount : (NSInteger)mostRecentEventCount
                                 value : (NSString *)value
                                 start : (NSInteger)start
-                                  end : (NSInteger)end)
+                                  end : (NSInteger)end
+                                screenreaderError : (NSString *)screenreaderError)
 {
   [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *, UIView *> *viewRegistry) {
     RCTBaseTextInputView *view = (RCTBaseTextInputView *)viewRegistry[viewTag];

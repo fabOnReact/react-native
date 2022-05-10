@@ -448,7 +448,9 @@ using namespace facebook::react;
                       value:(NSString *__nullable)value
                       start:(NSInteger)start
                         end:(NSInteger)end
+                      screenreaderError:(NSString *__nullable)screenreaderError
 {
+  _backedTextInputView.accessibilityValue = screenreaderError;
   if (_mostRecentEventCount != eventCount) {
     return;
   }

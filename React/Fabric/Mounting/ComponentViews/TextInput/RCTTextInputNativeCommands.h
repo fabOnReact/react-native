@@ -17,7 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setTextAndSelection:(NSInteger)eventCount
                       value:(NSString *__nullable)value
                       start:(NSInteger)start
-                        end:(NSInteger)end;
+                        end:(NSInteger)end
+                      screenreaderError:(NSString *__nullable)screenreaderError;
 @end
 
 RCT_EXTERN inline void
@@ -51,9 +52,9 @@ RCTTextInputHandleCommand(id<RCTTextInputViewProtocol> componentView, NSString c
 
   if ([commandName isEqualToString:@"setTextAndSelection"]) {
 #if RCT_DEBUG
-    if ([args count] != 4) {
+    if ([args count] != 5) {
       RCTLogError(
-          @"%@ command %@ received %d arguments, expected %d.", @"TextInput", commandName, (int)[args count], 4);
+          @"%@ command %@ received %d arguments, expected %d.", @"TextInput", commandName, (int)[args count], 5);
       return;
     }
 #endif
@@ -92,9 +93,11 @@ RCTTextInputHandleCommand(id<RCTTextInputViewProtocol> componentView, NSString c
 #endif
     NSInteger end = [(NSNumber *)arg3 intValue];
 
-    [componentView setTextAndSelection:eventCount value:value start:start end:end];
+    NSObject *arg4 = args[4];
+    NSString *screenreaderError = [arg4 isKindOfClass:[NSNull class]] ? nil : (NSString *)arg4;
+    [componentView setTextAndSelection:eventCount value:value start:start end:end screenreaderError:screenreaderError];
     return;
-  }
+  } 
 
 #if RCT_DEBUG
   RCTLogError(@"%@ received command %@, which is not a supported command.", @"TextInput", commandName);
