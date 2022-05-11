@@ -175,17 +175,8 @@ public class ReactEditText extends AppCompatEditText
           @Override
           public void onInitializeAccessibilityEvent(View host, AccessibilityEvent event) {
             super.onInitializeAccessibilityEvent(host, event);
-            if (event.getEventType() == AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED
-                && host.getParent() != null) {
-              try {
-                host.getParent().requestSendAccessibilityEvent(host, event);
-              } catch (AbstractMethodError e) {
-                FLog.w(
-                    TAG,
-                    host.getParent().getClass().getSimpleName()
-                        + " does not fully implement ViewParent",
-                    e);
-              }
+            if (((View) host).getParent() != null) {
+              ((View) host).getParent().requestSendAccessibilityEvent(host, event);
             }
           }
 
@@ -545,11 +536,10 @@ public class ReactEditText extends AppCompatEditText
    */
   public void maybeSetAccessibilityError(
       int eventCounter, @Nullable String accessibilityErrorMessage) {
-    String previousAccessibilityError = (String) getTag(R.id.accessibility_error);
-    if (!canUpdateWithEventCount(eventCounter)
-        || previousAccessibilityError == accessibilityErrorMessage) {
-      return;
-    }
+    // Breaks the functionality - need to understand why
+    // if (!canUpdateWithEventCount(eventCounter)) {
+    //  return;
+    // }
 
     setTag(R.id.accessibility_error, accessibilityErrorMessage);
     sendAccessibilityEvent(AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED);

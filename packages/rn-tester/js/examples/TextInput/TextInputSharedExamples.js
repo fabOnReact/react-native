@@ -727,6 +727,8 @@ module.exports = ([
           />
         </View>
       );
+    },
+  },
   {
     title: 'Error Message',
     render: function (): React.Node {

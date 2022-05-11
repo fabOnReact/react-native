@@ -315,6 +315,8 @@ public class ReactTextInputManager extends BaseViewManager<ReactEditText, Layout
               getReactTextUpdate(text, mostRecentEventCount, start, end));
         }
         reactEditText.maybeSetSelection(mostRecentEventCount, start, end);
+        String screenreaderError = args.getString(4);
+        reactEditText.maybeSetAccessibilityError(mostRecentEventCount, screenreaderError);
         break;
     }
   }
@@ -325,7 +327,7 @@ public class ReactTextInputManager extends BaseViewManager<ReactEditText, Layout
     sb.append(TextTransform.apply(text, TextTransform.UNSET));
 
     return new ReactTextUpdate(
-        sb, mostRecentEventCount, false, 0, 0, 0, 0, Gravity.NO_GRAVITY, 0, 0, start, end, null);
+        sb, mostRecentEventCount, false, 0, 0, 0, 0, Gravity.NO_GRAVITY, 0, 0, start, end);
   }
 
   @Override
@@ -369,7 +371,6 @@ public class ReactTextInputManager extends BaseViewManager<ReactEditText, Layout
 
       view.maybeSetTextFromState(update);
       view.maybeSetSelection(update.getJsEventCounter(), selectionStart, selectionEnd);
-      view.maybeSetAccessibilityError(update.getJsEventCounter(), update.getAccessibilityError());
     }
   }
 
@@ -1321,18 +1322,12 @@ public class ReactTextInputManager extends BaseViewManager<ReactEditText, Layout
     int textBreakStrategy =
         TextAttributeProps.getTextBreakStrategy(paragraphAttributes.getString("textBreakStrategy"));
 
-    String screenreaderError =
-        paragraphAttributes.hasKey("screenreaderError")
-            ? paragraphAttributes.getString("screenreaderError")
-            : null;
-
     return ReactTextUpdate.buildReactTextUpdateFromState(
         spanned,
         state.getInt("mostRecentEventCount"),
         TextAttributeProps.getTextAlignment(props, TextLayoutManager.isRTL(attributedString)),
         textBreakStrategy,
         TextAttributeProps.getJustificationMode(props),
-        containsMultipleFragments,
-        screenreaderError);
+        containsMultipleFragments);
   }
 }
