@@ -450,7 +450,6 @@ using namespace facebook::react;
                         end:(NSInteger)end
                       screenreaderError:(NSString *__nullable)screenreaderError
 {
-  _backedTextInputView.accessibilityValue = screenreaderError;
   if (_mostRecentEventCount != eventCount) {
     return;
   }
@@ -460,6 +459,16 @@ using namespace facebook::react;
         [[NSAttributedString alloc] initWithString:value attributes:_backedTextInputView.defaultTextAttributes];
     [self _setAttributedString:attributedString];
     [self _updateState];
+  }
+
+  if (screenreaderError && ![screenreaderError isEqualToString:_backedTextInputView.accessibilityValue]) {
+    NSString *errorWithText;
+    if ([_backedTextInputView.attributedText.string length] != 0) {
+      errorWithText = [NSString stringWithFormat: @"%@: %@", _backedTextInputView.attributedText.string, screenreaderError];
+    } else {
+      errorWithText = screenreaderError;
+    }
+    _backedTextInputView.accessibilityValue = errorWithText;
   }
 
   UITextPosition *startPosition = [_backedTextInputView positionFromPosition:_backedTextInputView.beginningOfDocument
