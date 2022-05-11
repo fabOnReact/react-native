@@ -475,7 +475,8 @@ class SelectionExample extends React.Component<
 
 function ErrorExample(): React.Node {
   const [text, setText] = React.useState('');
-  const [error, setError] = React.useState(null);
+  const [error, setError] = React.useState('');
+  let textinput = React.useRef(null);
   return (
     <>
       <Button onPress={() => setError('button')} title="Press to set error" />
@@ -483,20 +484,24 @@ function ErrorExample(): React.Node {
         Type error in the below TextInput to display an error message.
       </Text>
       <TextInput
+        ref={ref => (textinput = ref)}
+        accessible={true}
         screenreaderError={error}
-        onBlur={() => setError('onBlur')}
-        onEndEditing={() => setError('onEndEditing')}
+        multiline={false}
+        // onBlur={() => setError('onBlur')}
+        // onEndEditing={() => setError('onEndEditing')}
         onChangeText={newText => {
-          setText(newText);
-          if (newText === 'Error') {
-            setError('the newText is: ' + newText);
-          } else if (newText === 'empty') {
-            setError('');
-          } else if (newText === 'null') {
-            setError(null);
-          } else if (error !== 'onBlur') {
-            setError(null);
+          if (newText.length == 2) {
+            const error = 'This error is triggered when text is two chars long';
+            textinput?.setScreenreaderError(error);
+            setError(error);
+          } else {
+            const error =
+              'This error is triggered when the text is not two chars long';
+            textinput?.setScreenreaderError(error);
+            setError(error);
           }
+          setText(newText);
         }}
         value={text}
         style={styles.default}
@@ -722,8 +727,6 @@ module.exports = ([
           />
         </View>
       );
-    },
-  },
   {
     title: 'Error Message',
     render: function (): React.Node {
