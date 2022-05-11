@@ -67,12 +67,6 @@ class ParagraphAttributes : public DebugStringConvertible {
   HyphenationFrequency android_hyphenationFrequency{};
 
   /*
-   * (Android only) String to be read by screenreaders to indicate an error state
-   * of a TextInput. The default is `null`.
-   */
-  std::optional<std::string> screenreaderError{};
-
-  /*
    * In case of font size adjustment enabled, defines minimum and maximum
    * font sizes.
    */
@@ -107,8 +101,7 @@ struct hash<facebook::react::ParagraphAttributes> {
         attributes.minimumFontSize,
         attributes.maximumFontSize,
         attributes.includeFontPadding,
-        attributes.android_hyphenationFrequency, 
-        attributes.screenreaderError);
+        attributes.android_hyphenationFrequency);
   }
 };
 } // namespace std

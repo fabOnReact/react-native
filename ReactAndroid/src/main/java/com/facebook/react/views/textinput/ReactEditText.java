@@ -534,7 +534,7 @@ public class ReactEditText extends AppCompatEditText
    * @param eventCounter
    * @param accessibilityErrorMessage
    */
-  public void maybeSetAccessibilityError(
+  public void maybeSetAccessibilityErrorFromJS(
       int eventCounter, @Nullable String accessibilityErrorMessage) {
     // Breaks the functionality - need to understand why
     // if (!canUpdateWithEventCount(eventCounter)) {
