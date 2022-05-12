@@ -315,7 +315,7 @@ public class ReactTextInputManager extends BaseViewManager<ReactEditText, Layout
               getReactTextUpdate(text, mostRecentEventCount, start, end));
         }
         reactEditText.maybeSetSelection(mostRecentEventCount, start, end);
-        String screenreaderError = args.getString(4);
+        @Nullable String screenreaderError = args.getString(4);
         reactEditText.maybeSetAccessibilityErrorFromJS(mostRecentEventCount, screenreaderError);
         break;
     }

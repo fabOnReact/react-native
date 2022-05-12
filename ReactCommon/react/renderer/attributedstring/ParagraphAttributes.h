@@ -14,8 +14,6 @@
 #include <react/renderer/debug/DebugStringConvertible.h>
 #include <react/renderer/graphics/Geometry.h>
 
-#include <optional>
-
 namespace facebook {
 namespace react {
 
