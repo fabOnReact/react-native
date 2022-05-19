@@ -488,17 +488,18 @@ function ErrorExample(): React.Node {
         accessible={true}
         screenreaderError={error}
         multiline={false}
+        accessibilityLabel="this is my label"
         // onBlur={() => setError('onBlur')}
         // onEndEditing={() => setError('onEndEditing')}
         onChangeText={newText => {
           if (newText.length == 2) {
             const error = 'This error is triggered when text is two chars long';
-            textinput?.setScreenreaderError(error);
+            textinput?.setScreenreaderError(newText, error);
             setError(error);
           } else {
             const error =
               'This error is triggered when the text is not two chars long';
-            textinput?.setScreenreaderError(error);
+            textinput?.setScreenreaderError(newText, error);
             setError(error);
           }
           setText(newText);

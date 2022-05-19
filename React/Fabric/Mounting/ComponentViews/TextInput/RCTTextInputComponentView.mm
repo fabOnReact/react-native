@@ -136,9 +136,10 @@ using namespace facebook::react;
 
   if (newTextInputProps.screenreaderError != oldTextInputProps.screenreaderError) {
     NSString *error = RCTNSStringFromString(newTextInputProps.screenreaderError);
-    NSString *errorWithText;
-    if ([_backedTextInputView.attributedText.string length] != 0) {
-      errorWithText = [NSString stringWithFormat: @"%@: %@", _backedTextInputView.attributedText.string, error];
+    NSString *errorWithText = RCTNSStringFromString(newTextInputProps.screenreaderError);
+    NSString *text = RCTNSStringFromString(newTextInputProps.text);
+    if ([text length] != 0) {
+      errorWithText = [NSString stringWithFormat: @"%@ %@", text, error];
     } else {
       errorWithText = error;
     }
@@ -450,25 +451,30 @@ using namespace facebook::react;
                         end:(NSInteger)end
                       screenreaderError:(NSString *__nullable)screenreaderError
 {
+  // I have to find a solution in TextInput.js as onChangeText triggers
+  // setMostRecentEventCount after we call setTextAndSelection
+  // maybe we should call setTextAndSelection only once onChangeText
+  if (screenreaderError) {
+    NSString *error = screenreaderError;
+    NSString *errorWithText = screenreaderError;
+    if ([value length] != 0) {
+      errorWithText = [NSString stringWithFormat: @"%@ %@", value, error];
+    } else {
+      errorWithText = error;
+    }
+    UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, errorWithText);
+  }
+
   if (_mostRecentEventCount != eventCount) {
     return;
   }
   _comingFromJS = YES;
+
   if (value && ![value isEqualToString:_backedTextInputView.attributedText.string]) {
     NSAttributedString *attributedString =
         [[NSAttributedString alloc] initWithString:value attributes:_backedTextInputView.defaultTextAttributes];
     [self _setAttributedString:attributedString];
     [self _updateState];
-  }
-
-  if (screenreaderError && ![screenreaderError isEqualToString:_backedTextInputView.accessibilityValue]) {
-    NSString *errorWithText;
-    if ([_backedTextInputView.attributedText.string length] != 0) {
-      errorWithText = [NSString stringWithFormat: @"%@: %@", _backedTextInputView.attributedText.string, screenreaderError];
-    } else {
-      errorWithText = screenreaderError;
-    }
-    _backedTextInputView.accessibilityValue = errorWithText;
   }
 
   UITextPosition *startPosition = [_backedTextInputView positionFromPosition:_backedTextInputView.beginningOfDocument

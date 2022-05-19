@@ -1080,13 +1080,13 @@ function InternalTextInput(props: Props): React.Node {
     }
   }
 
-  function setScreenreaderError(screenreaderError: string): void {
+  function setScreenreaderError(text: string, screenreaderError: string): void {
     const {selection} = lastNativeSelectionState;
     if (inputRef.current != null) {
       viewCommands.setTextAndSelection(
         inputRef.current,
         mostRecentEventCount,
-        null,
+        text,
         selection?.start ?? -1,
         selection?.end ?? -1,
         screenreaderError,
