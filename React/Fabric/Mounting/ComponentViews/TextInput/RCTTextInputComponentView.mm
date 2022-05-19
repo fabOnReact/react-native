@@ -144,6 +144,7 @@ using namespace facebook::react;
       errorWithText = error;
     }
     self.accessibilityElement.accessibilityValue = errorWithText;
+    UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, errorWithText);
   }
 
   if (newTextInputProps.traits.enablesReturnKeyAutomatically !=
@@ -462,6 +463,7 @@ using namespace facebook::react;
     } else {
       errorWithText = error;
     }
+    self.accessibilityElement.accessibilityValue = errorWithText;
     UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, errorWithText);
   }
 
