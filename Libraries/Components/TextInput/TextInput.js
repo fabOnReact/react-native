@@ -1262,7 +1262,7 @@ function InternalTextInput(props: Props): React.Node {
 
     const style =
       props.multiline === true
-        ? [styles.multilineInput, props.style]
+        ? StyleSheet.flatten([styles.multilineInput, props.style])
         : props.style;
 
     const useOnChangeSync =
