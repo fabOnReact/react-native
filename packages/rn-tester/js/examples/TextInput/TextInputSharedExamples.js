@@ -479,7 +479,10 @@ function ErrorExample(): React.Node {
   let textinput = React.useRef(null);
   return (
     <>
-      <Button onPress={() => setError('button')} title="Press to set error" />
+      <Button
+        onPress={() => setError('this message is set with the button')}
+        title="Press to set error"
+      />
       <Text>
         Type error in the below TextInput to display an error message.
       </Text>
