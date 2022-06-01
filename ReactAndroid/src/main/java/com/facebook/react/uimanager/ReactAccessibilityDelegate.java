@@ -1037,8 +1037,7 @@ public class ReactAccessibilityDelegate extends ExploreByTouchHelper {
         talkbackSegments.append(contentDescription + delimiter);
         // then role
         if (roleDescription != null) {
-          String roleString = roleDescription.toString();
-          talkbackSegments.append(roleString + delimiter);
+          talkbackSegments.append(roleDescription + delimiter);
         }
 
         // lastly disabled is appended if applicable
