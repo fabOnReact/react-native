@@ -1112,6 +1112,8 @@ public class ReactScrollView extends ScrollView
 
     int currentScrollY = getScrollY();
     int maxScrollY = getMaxScrollY();
+    // this is a test of the implementation from
+    // https://github.com/facebook/react-native/pull/29466/files#diff-dd50314ea4292aa2fb65c5511378b1d7bce34d337cd8f9b99890761ee2dd8160R1040-R1073
     if (mEnabledTalkbackCompatibleInvertedList) {
       if (mInitialScrollTriggered) {
         scrollMaintainVisibleContentPosition();

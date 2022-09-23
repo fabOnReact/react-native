@@ -143,10 +143,10 @@ function NestedFlatList(props) {
       <Text>Flatlist</Text>
       <FlatList
         maintainVisibleContentPosition={{
-          minIndexForVisible: minIndex,
+          minIndexForVisible: 0,
         }}
-        inverted
-        enabledTalkbackCompatibleInvertedList
+        // inverted
+        // enabledTalkbackCompatibleInvertedList
         renderItem={renderItem}
         data={items}
         /*
