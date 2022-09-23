@@ -93,6 +93,29 @@ public class ReactScrollViewManager extends ViewGroupManager<ReactScrollView>
     view.setDisableIntervalMomentum(disbaleIntervalMomentum);
   }
 
+  @ReactProp(name = "enabledTalkbackCompatibleInvertedList")
+  public void setEnabledTalkbackCompatibleInvertedList(
+      ReactScrollView view, boolean enabledTalkbackCompatibleInvertedList) {
+    view.setEnabledTalkbackCompatibleInvertedList(true);
+  }
+
+  @ReactProp(name = "maintainVisibleContentPosition")
+  public void setMaintainVisibleContentPosition(ReactScrollView view, ReadableMap value) {
+    if (value != null) {
+      int minIndexForVisible = value.getInt("minIndexForVisible");
+      Integer autoScrollToTopThreshold =
+          value.hasKey("autoscrollToTopThreshold")
+              ? value.getInt("autoscrollToTopThreshold")
+              : null;
+      ReactScrollViewMaintainVisibleContentPositionData maintainVisibleContentPositionData =
+          new ReactScrollViewMaintainVisibleContentPositionData(
+              minIndexForVisible, autoScrollToTopThreshold);
+      view.setMaintainVisibleContentPosition(maintainVisibleContentPositionData);
+    } else {
+      view.setMaintainVisibleContentPosition(null);
+    }
+  }
+
   @ReactProp(name = "snapToInterval")
   public void setSnapToInterval(ReactScrollView view, float snapToInterval) {
     // snapToInterval needs to be exposed as a float because of the Javascript interface.

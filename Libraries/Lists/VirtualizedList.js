@@ -1477,23 +1477,6 @@ class VirtualizedList extends React.PureComponent<Props, State> {
       // The root cause of this issue may have been
       // adding contentLength to state.
       // Try to move this to another callback, for example componentDidUpdate
-      setTimeout(
-        (flatlist, contentLength, lastItem) => {
-          if (
-            contentLength != undefined &&
-            contentLength >= this._lastScrollPosition
-          ) {
-            flatlist.scrollToOffset({
-              offset: contentLength,
-              animated: false,
-            });
-          }
-        },
-        1,
-        this,
-        this._scrollMetrics.contentLength,
-        lastItem,
-      );
       this._lastItem = lastItem;
       this._lastScrollPosition = this._scrollMetrics.contentLength;
       this._hasTriggeredInitialScrollToIndex = true;
@@ -1515,17 +1498,6 @@ class VirtualizedList extends React.PureComponent<Props, State> {
       } else {
         newBottomHeight = height - this._lastOffsetFromBottomOfScreen;
       }
-      this._scrollToOffsetTimeout = setTimeout(
-        (flatlist, bottomHeight) => {
-          flatlist.scrollToOffset({
-            offset: bottomHeight,
-            animated: false,
-          });
-        },
-        1,
-        this,
-        newBottomHeight,
-      );
     }
     this._maybeCallOnEndReached();
   };

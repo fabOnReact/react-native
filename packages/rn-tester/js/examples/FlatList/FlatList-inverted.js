@@ -95,6 +95,7 @@ function NestedFlatList(props) {
   const [items, setItems] = useState(DATA);
   const [disabled, setDisabled] = useState(false);
   const [index, setIndex] = useState(DATA.length + 1);
+  const [minIndex, setMinIndex] = useState(DATA.length - 1);
   const [counter, setCounter] = useState(0);
   const getNewItems = startIndex => {
     let newItems = [];
@@ -141,33 +142,20 @@ function NestedFlatList(props) {
       />
       <Text>Flatlist</Text>
       <FlatList
-        onScrollToIndexFailed={e => console.log(e)}
-        // initialScrollIndex is not supported with enableTalkbackCompatibleInvertedList
-        // initialScrollIndex={5}
-        ref={ref => {
-          // $FlowFixMe
-          flatlist = ref;
+        maintainVisibleContentPosition={{
+          minIndexForVisible: minIndex,
         }}
-        enabledTalkbackCompatibleInvertedList
-        accessibilityRole="list"
-        ListFooterComponent={
-          <Text style={{height: 50, width: 100, backgroundColor: 'yellow'}}>
-            Footer Component
-          </Text>
-        }
-        ListHeaderComponent={
-          <Text style={{height: 100, width: 100, backgroundColor: 'yellow'}}>
-            Header Component
-          </Text>
-        }
         inverted
+        enabledTalkbackCompatibleInvertedList
         renderItem={renderItem}
         data={items}
+        /*
         onEndReached={() => {
           console.log('TESTING:: ' + 'callback called');
           setItems(items => [...items, ...getNewItems(index)]);
           setIndex(index => index + 11);
         }}
+        */
       />
     </View>
   );
