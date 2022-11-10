@@ -547,6 +547,55 @@ inline void fromRawValue(
   result = TextDecorationStyle::Solid;
 }
 
+inline void fromRawValue(
+    const PropsParserContext &context,
+    const RawValue &value,
+    AccessibilityUnit &result) {
+  auto map = (butter::map<std::string, RawValue>)value;
+  auto hours = map.find("hours");
+  if (hours->second.hasType<int>()) {
+    result.hours = (int) hours->second;
+  }
+}
+  /*
+  auto map = (butter::map<std::string, RawValue>)value;
+  auto selected = map.find("selected");
+  if (selected != map.end()) {
+    fromRawValue(context, selected->second, result.selected);
+  }
+  auto disabled = map.find("disabled");
+  if (disabled != map.end()) {
+    fromRawValue(context, disabled->second, result.disabled);
+  }
+  auto checked = map.find("checked");
+  if (checked != map.end()) {
+    if (checked->second.hasType<std::string>()) {
+      if ((std::string)checked->second == "mixed") {
+        result.checked = AccessibilityState::Mixed;
+      } else {
+        result.checked = AccessibilityState::None;
+      }
+    } else if (checked->second.hasType<bool>()) {
+      if ((bool)checked->second == true) {
+        result.checked = AccessibilityState::Checked;
+      } else {
+        result.checked = AccessibilityState::Unchecked;
+      }
+    } else {
+      result.checked = AccessibilityState::None;
+    }
+  }
+  auto busy = map.find("busy");
+  if (busy != map.end()) {
+    fromRawValue(context, busy->second, result.busy);
+  }
+  auto expanded = map.find("expanded");
+  if (expanded != map.end()) {
+    fromRawValue(context, expanded->second, result.expanded);
+  }
+  */
+}
+
 inline std::string toString(const TextDecorationStyle &textDecorationStyle) {
   switch (textDecorationStyle) {
     case TextDecorationStyle::Solid:

@@ -89,7 +89,7 @@ constexpr bool operator!=(
 }
 
 struct AccessibilityUnit {
-  std::optional<std::string> hours;
+  int hours;
 };
 
 constexpr bool operator==(
@@ -103,6 +103,7 @@ constexpr bool operator!=(
     AccessibilityUnit const &rhs) {
   return !(rhs == lhs);
 }
+
 
 struct AccessibilityLabelledBy {
   std::vector<std::string> value{};

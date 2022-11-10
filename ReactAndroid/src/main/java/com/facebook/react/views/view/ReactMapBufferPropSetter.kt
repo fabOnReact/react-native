@@ -6,7 +6,6 @@
  */
 
 package com.facebook.react.views.view
-import android.util.Log;
 import android.graphics.Color
 import android.graphics.Rect
 import androidx.core.view.ViewCompat
@@ -108,7 +107,6 @@ object ReactMapBufferPropSetter {
   private const val UNDEF_COLOR = Int.MAX_VALUE
 
   fun setProps(view: ReactViewGroup, viewManager: ReactViewManager, props: MapBuffer) {
-    Log.w("TESTING::ReactMapBufferPropSetter", "props: " + ( props ));
     for (entry in props) {
       when (entry.key) {
         VP_ACCESSIBILITY_ACTIONS -> {
@@ -133,7 +131,7 @@ object ReactMapBufferPropSetter {
           viewManager.accessibilityState(view, entry.mapBufferValue)
         }
         VP_ACCESSIBILITY_UNIT -> {
-          // viewManager.accessibilityUnit(view, entry.mapBufferValue)
+          viewManager.accessibilityUnit(view, entry.mapBufferValue)
         }
         VP_ACCESSIBILITY_VALUE -> {
           viewManager.accessibilityValue(view, entry.stringValue)
@@ -284,7 +282,6 @@ object ReactMapBufferPropSetter {
   }
 
   private fun ReactViewManager.accessibilityUnit(view: ReactViewGroup, value: MapBuffer) {
-    Log.w("TESTING::ReactMapBufferPropSetter", "accessibilityUnit");
     val accessibilityUnit = JavaOnlyMap()
     accessibilityUnit.putString("hours", "10")
 
