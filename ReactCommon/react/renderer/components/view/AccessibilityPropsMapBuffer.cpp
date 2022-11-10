@@ -75,7 +75,7 @@ MapBuffer convertAccessibilityState(AccessibilityState const &state) {
 
 MapBuffer convertAccessibilityUnit(AccessibilityUnit const &state) {
   MapBufferBuilder builder(1);
-  builder.putString(ACCESSIBILITY_UNIT_HOURS, "10");
+  builder.putInt(ACCESSIBILITY_UNIT_HOURS, 10);
   return builder.build();
 }
 

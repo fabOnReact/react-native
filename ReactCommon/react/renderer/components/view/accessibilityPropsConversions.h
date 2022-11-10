@@ -176,8 +176,8 @@ inline void fromRawValue(
     AccessibilityUnit &result) {
   auto map = (butter::map<std::string, RawValue>)value;
   auto hours = map.find("hours");
-  if (hours != map.end()) {
-    fromRawValue(context, hours->second, result.hours);
+  if (hours->second.hasType<int>()) {
+    result.hours = (int) hours->second;
   }
 }
 

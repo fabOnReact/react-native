@@ -135,6 +135,24 @@ enum class AccessibilityRole {
   Toolbar,
 };
 
+
+struct AccessibilityUnit1 {
+ int hours;
+};
+
+constexpr bool operator==(
+    AccessibilityUnit1 const &lhs,
+    AccessibilityUnit1 const &rhs) {
+  return lhs.hours == rhs.hours;
+}
+
+constexpr bool operator!=(
+    AccessibilityUnit1 const &lhs,
+    AccessibilityUnit1 const &rhs) {
+  return !(rhs == lhs);
+}
+
+
 enum class TextTransform {
   None,
   Uppercase,
@@ -218,6 +236,13 @@ struct hash<facebook::react::TextBreakStrategy> {
 
 template <>
 struct hash<facebook::react::AccessibilityRole> {
+  size_t operator()(const facebook::react::AccessibilityRole &v) const {
+    return hash<int>()(static_cast<int>(v));
+  }
+};
+
+template <>
+struct hash<facebook::react::AccessibilityUnit1> {
   size_t operator()(const facebook::react::AccessibilityRole &v) const {
     return hash<int>()(static_cast<int>(v));
   }
