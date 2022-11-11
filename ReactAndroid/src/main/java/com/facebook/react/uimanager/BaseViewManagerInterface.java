@@ -34,7 +34,7 @@ public interface BaseViewManagerInterface<T extends View> {
 
   void setViewState(T view, @Nullable ReadableMap accessibilityState);
 
-  void setAccessibilityUnit(T view, @Nullable ReadableMap accessibilityUnit);
+  void setAccessibilityUnit(T view, @Nullable String accessibilityUnit);
 
   void setBackgroundColor(T view, int backgroundColor);
 

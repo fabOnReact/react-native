@@ -320,7 +320,7 @@ public abstract class BaseViewManager<T extends View, C extends LayoutShadowNode
 
   @Override
   @ReactProp(name = ViewProps.ACCESSIBILITY_UNIT)
-  public void setAccessibilityUnit(@NonNull T view, @Nullable ReadableMap accessibilityUnit) {
+  public void setAccessibilityUnit(@NonNull T view, @Nullable String accessibilityUnit) {
     // do nothing
   }
 

@@ -39,7 +39,7 @@ class AccessibilityProps {
 
   bool accessible{false};
   AccessibilityState accessibilityState;
-  AccessibilityUnit accessibilityUnit;
+  std::string accessibilityUnit{"1"};
   std::string accessibilityLabel{""};
   AccessibilityLabelledBy accessibilityLabelledBy{};
   AccessibilityLiveRegion accessibilityLiveRegion{
