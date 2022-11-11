@@ -133,7 +133,7 @@ object ReactMapBufferPropSetter {
           viewManager.accessibilityState(view, entry.mapBufferValue)
         }
         VP_ACCESSIBILITY_UNIT -> {
-          viewManager.accessibilityUnit(view, entry.stringValue)
+          viewManager.setAccessibilityUnit(view, entry.stringValue.takeIf { it.isNotEmpty() })
         }
         VP_ACCESSIBILITY_VALUE -> {
           viewManager.accessibilityValue(view, entry.stringValue)
@@ -285,11 +285,8 @@ object ReactMapBufferPropSetter {
 
   private fun ReactViewManager.accessibilityUnit(view: ReactViewGroup, value: String) {
     Log.w("TESTING::ReactMapBufferPropSetter", "accessibilityUnit");
-    /*
-    val accessibilityUnit = JavaOnlyMap()
-    accessibilityUnit.putString("hours", "10")
-    setAccessibilityUnit(view, accessibilityUnit)
-    */
+    Log.w("TESTING::ReactMapBufferPropSetter", "value: " + ( value ));
+    setAccessibilityUnit(view,"random string")
   }
 
   private fun ReactViewManager.accessibilityState(view: ReactViewGroup, value: MapBuffer) {

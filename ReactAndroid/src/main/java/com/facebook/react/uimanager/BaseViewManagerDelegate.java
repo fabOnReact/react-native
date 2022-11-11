@@ -7,6 +7,7 @@
 
 package com.facebook.react.uimanager;
 
+import android.util.Log;
 import android.view.View;
 import androidx.annotation.Nullable;
 import com.facebook.react.bridge.ColorPropConverter;
@@ -30,6 +31,8 @@ public abstract class BaseViewManagerDelegate<T extends View, U extends BaseView
 
   @Override
   public void setProperty(T view, String propName, @Nullable Object value) {
+    Log.w("TESTING::BaseViewManagerDelegate", "propName: " + (propName));
+    Log.w("TESTING::BaseViewManagerDelegate", "value: " + (value));
     switch (propName) {
       case ViewProps.ACCESSIBILITY_ACTIONS:
         mViewManager.setAccessibilityActions(view, (ReadableArray) value);

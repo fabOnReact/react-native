@@ -1083,6 +1083,7 @@ constexpr static MapBuffer::Key TA_KEY_IS_HIGHLIGHTED = 20;
 constexpr static MapBuffer::Key TA_KEY_LAYOUT_DIRECTION = 21;
 constexpr static MapBuffer::Key TA_KEY_ACCESSIBILITY_ROLE = 22;
 constexpr static MapBuffer::Key TA_KEY_LINE_BREAK_STRATEGY = 23;
+constexpr static MapBuffer::Key TA_KEY_ACCESSIBILITY_UNIT = 47;
 
 // constants for ParagraphAttributes serialization
 constexpr static MapBuffer::Key PA_KEY_MAX_NUMBER_OF_LINES = 0;
@@ -1226,8 +1227,12 @@ inline MapBuffer toMapBuffer(const TextAttributes &textAttributes) {
         TA_KEY_LAYOUT_DIRECTION, toString(*textAttributes.layoutDirection));
   }
   if (textAttributes.accessibilityRole.has_value()) {
+
+    LOG(ERROR) << "TESTING:: attributedString conversions.h accessibilityRole: " << toString(*textAttributes.accessibilityRole);
     builder.putString(
         TA_KEY_ACCESSIBILITY_ROLE, toString(*textAttributes.accessibilityRole));
+    builder.putString(
+        TA_KEY_ACCESSIBILITY_UNIT, "random unit");
   }
   return builder.build();
 }

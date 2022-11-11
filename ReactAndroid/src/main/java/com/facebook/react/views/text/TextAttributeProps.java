@@ -11,6 +11,7 @@ import android.os.Build;
 import android.text.Layout;
 import android.text.TextUtils;
 import android.util.LayoutDirection;
+import android.util.Log;
 import android.view.Gravity;
 import androidx.annotation.Nullable;
 import com.facebook.react.bridge.JSApplicationIllegalArgumentException;
@@ -53,6 +54,7 @@ public class TextAttributeProps {
   public static final short TA_KEY_IS_HIGHLIGHTED = 20;
   public static final short TA_KEY_LAYOUT_DIRECTION = 21;
   public static final short TA_KEY_ACCESSIBILITY_ROLE = 22;
+  public static final short TA_KEY_ACCESSIBILITY_UNIT = 47;
 
   public static final int UNSET = -1;
 
@@ -144,6 +146,8 @@ public class TextAttributeProps {
 
     // TODO T83483191: Review constants that are not being set!
     Iterator<MapBuffer.Entry> iterator = props.iterator();
+    Log.w("TESTING::TextAttributeProps", "fromMapBuffer");
+    Log.w("TESTING::TextAttributeProps", "props: " + (props));
     while (iterator.hasNext()) {
       MapBuffer.Entry entry = iterator.next();
       switch (entry.getKey()) {
@@ -205,6 +209,9 @@ public class TextAttributeProps {
           break;
         case TA_KEY_ACCESSIBILITY_ROLE:
           result.setAccessibilityRole(entry.getStringValue());
+          break;
+        case TA_KEY_ACCESSIBILITY_UNIT:
+          result.setAccessibilityUnit(entry.getStringValue());
           break;
       }
     }
@@ -602,6 +609,8 @@ public class TextAttributeProps {
 
   private void setAccessibilityRole(@Nullable String accessibilityRole) {
     if (accessibilityRole != null) {
+      Log.w("TESTING::TextAttributeProps", "setAccessibilityRole");
+      Log.w("TESTING::TextAttributeProps", "accessibilityRole: " + (accessibilityRole));
       mIsAccessibilityRoleSet = true;
       mAccessibilityRole = AccessibilityRole.fromValue(accessibilityRole);
       mIsAccessibilityLink = mAccessibilityRole.equals(AccessibilityRole.LINK);
@@ -613,6 +622,8 @@ public class TextAttributeProps {
   }
 
   private void setAccessibilityUnit(@Nullable String accessibilityUnit) {
+    Log.w("TESTING::TextAttributeProps", "setAccessibilityUnit");
+    Log.w("TESTING::TextAttributeProps", "accessibilityUnit: " + (accessibilityUnit));
     // not yet implemented
   }
 

@@ -178,6 +178,15 @@ class AccessibilityExample extends React.Component<{}> {
                 17:00
               </Text>
             </Text>
+            <Text accessible={true}>
+              This is a
+              <Text
+                accessibilityRole="link"
+                accessible={true}
+                style={{backgroundColor: 'red'}}>
+                link
+              </Text>
+            </Text>
           </View>
           <View>
             <Text accessible={true} accessibilityRole="telephone">
