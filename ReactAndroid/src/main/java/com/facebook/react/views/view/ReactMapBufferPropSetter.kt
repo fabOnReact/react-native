@@ -133,7 +133,7 @@ object ReactMapBufferPropSetter {
           viewManager.accessibilityState(view, entry.mapBufferValue)
         }
         VP_ACCESSIBILITY_UNIT -> {
-          // viewManager.accessibilityUnit(view, entry.mapBufferValue)
+          viewManager.accessibilityUnit(view, entry.mapBufferValue)
         }
         VP_ACCESSIBILITY_VALUE -> {
           viewManager.accessibilityValue(view, entry.stringValue)
