@@ -19,7 +19,6 @@ import android.text.Spanned;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.util.LayoutDirection;
-import android.util.Log;
 import android.util.LruCache;
 import android.view.View;
 import androidx.annotation.NonNull;
