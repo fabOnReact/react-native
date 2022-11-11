@@ -146,8 +146,6 @@ public class TextAttributeProps {
 
     // TODO T83483191: Review constants that are not being set!
     Iterator<MapBuffer.Entry> iterator = props.iterator();
-    Log.w("TESTING::TextAttributeProps", "fromMapBuffer");
-    Log.w("TESTING::TextAttributeProps", "props: " + (props));
     while (iterator.hasNext()) {
       MapBuffer.Entry entry = iterator.next();
       switch (entry.getKey()) {
@@ -609,8 +607,6 @@ public class TextAttributeProps {
 
   private void setAccessibilityRole(@Nullable String accessibilityRole) {
     if (accessibilityRole != null) {
-      Log.w("TESTING::TextAttributeProps", "setAccessibilityRole");
-      Log.w("TESTING::TextAttributeProps", "accessibilityRole: " + (accessibilityRole));
       mIsAccessibilityRoleSet = true;
       mAccessibilityRole = AccessibilityRole.fromValue(accessibilityRole);
       mIsAccessibilityLink = mAccessibilityRole.equals(AccessibilityRole.LINK);

@@ -1009,6 +1009,10 @@ inline folly::dynamic toDynamic(const TextAttributes &textAttributes) {
     _textAttributes(
         "accessibilityRole", toString(*textAttributes.accessibilityRole));
   }
+  if (!textAttributes.accessibilityUnit.empty()) {
+    _textAttributes(
+        "accessibilityUnit", textAttributes.accessibilityUnit);
+  }
   return _textAttributes;
 }
 
@@ -1228,11 +1232,13 @@ inline MapBuffer toMapBuffer(const TextAttributes &textAttributes) {
   }
   if (textAttributes.accessibilityRole.has_value()) {
 
-    LOG(ERROR) << "TESTING:: attributedString conversions.h accessibilityRole: " << toString(*textAttributes.accessibilityRole);
     builder.putString(
         TA_KEY_ACCESSIBILITY_ROLE, toString(*textAttributes.accessibilityRole));
+  }
+  if (!textAttributes.accessibilityUnit.empty()) {
+
     builder.putString(
-        TA_KEY_ACCESSIBILITY_UNIT, "random unit");
+        TA_KEY_ACCESSIBILITY_UNIT, textAttributes.accessibilityUnit);
   }
   return builder.build();
 }
