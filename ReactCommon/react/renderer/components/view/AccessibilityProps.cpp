@@ -45,6 +45,24 @@ AccessibilityProps::AccessibilityProps(
                     "accessibilityUnit",
                     sourceProps.accessibilityUnit,
                     {})),
+      accessibilityHours(
+          CoreFeatures::enablePropIteratorSetter
+              ? sourceProps.accessibilityHours
+              : convertRawProp(
+                    context,
+                    rawProps,
+                    "accessibilityHours",
+                    sourceProps.accessibilityHours,
+                    {})),
+      accessibilityMinutes(
+          CoreFeatures::enablePropIteratorSetter
+              ? sourceProps.accessibilityMinutes
+              : convertRawProp(
+                    context,
+                    rawProps,
+                    "accessibilityMinutes",
+                    sourceProps.accessibilityMinutes,
+                    {})),
       accessibilityLabel(
           CoreFeatures::enablePropIteratorSetter
               ? sourceProps.accessibilityLabel
@@ -221,6 +239,8 @@ void AccessibilityProps::setProp(
     RAW_SET_PROP_SWITCH_CASE_BASIC(accessible, false);
     RAW_SET_PROP_SWITCH_CASE_BASIC(accessibilityState, {});
     RAW_SET_PROP_SWITCH_CASE_BASIC(accessibilityUnit, {});
+    RAW_SET_PROP_SWITCH_CASE_BASIC(accessibilityHours, {});
+    RAW_SET_PROP_SWITCH_CASE_BASIC(accessibilityMinutes, {});
     RAW_SET_PROP_SWITCH_CASE_BASIC(accessibilityLabel, std::string{""});
     RAW_SET_PROP_SWITCH_CASE_BASIC(accessibilityLabelledBy, {});
     RAW_SET_PROP_SWITCH_CASE_BASIC(accessibilityHint, std::string{""});

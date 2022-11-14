@@ -11,6 +11,7 @@ import android.os.Build;
 import android.text.Layout;
 import android.text.TextUtils;
 import android.util.LayoutDirection;
+import android.util.Log;
 import android.view.Gravity;
 import androidx.annotation.Nullable;
 import com.facebook.react.bridge.JSApplicationIllegalArgumentException;
@@ -54,6 +55,8 @@ public class TextAttributeProps {
   public static final short TA_KEY_LAYOUT_DIRECTION = 21;
   public static final short TA_KEY_ACCESSIBILITY_ROLE = 22;
   public static final short TA_KEY_ACCESSIBILITY_UNIT = 47;
+  public static final short TA_KEY_ACCESSIBILITY_HOURS = 48;
+  public static final short TA_KEY_ACCESSIBILITY_MINUTES = 49;
 
   public static final int UNSET = -1;
 
@@ -210,6 +213,12 @@ public class TextAttributeProps {
           break;
         case TA_KEY_ACCESSIBILITY_UNIT:
           result.setAccessibilityUnit(entry.getStringValue());
+          break;
+        case TA_KEY_ACCESSIBILITY_HOURS:
+          result.setAccessibilityHours(entry.getIntValue());
+          break;
+        case TA_KEY_ACCESSIBILITY_MINUTES:
+          result.setAccessibilityMinutes(entry.getIntValue());
           break;
       }
     }
@@ -620,6 +629,18 @@ public class TextAttributeProps {
   private void setAccessibilityUnit(@Nullable String accessibilityUnit) {
     if (accessibilityUnit != null) {
       mAccessibilityUnit = accessibilityUnit;
+    }
+  }
+
+  private void setAccessibilityHours(@Nullable Integer accessibilityHours) {
+    if (accessibilityHours != null) {
+      Log.w("TESTING::TextAttributeProps", "accessibilityHours: " + (accessibilityHours));
+    }
+  }
+
+  private void setAccessibilityMinutes(@Nullable Integer accessibilityMinutes) {
+    if (accessibilityMinutes != null) {
+      Log.w("TESTING::TextAttributeProps", "accessibilityMinutes: " + (accessibilityMinutes));
     }
   }
 

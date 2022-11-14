@@ -100,6 +100,10 @@ void TextAttributes::apply(TextAttributes textAttributes) {
       : accessibilityRole;
   accessibilityUnit = !textAttributes.accessibilityUnit.empty() ? textAttributes.accessibilityUnit
                                                   : accessibilityUnit;
+  accessibilityHours = !(textAttributes.accessibilityHours == 0) ? textAttributes.accessibilityHours
+                                                  : accessibilityHours;
+  accessibilityMinutes = !(textAttributes.accessibilityMinutes == 0) ? textAttributes.accessibilityMinutes
+                                                  : accessibilityMinutes;
 }
 
 #pragma mark - Operators
@@ -125,6 +129,8 @@ bool TextAttributes::operator==(const TextAttributes &rhs) const {
              layoutDirection,
              accessibilityRole,
              accessibilityUnit,
+             accessibilityHours,
+             accessibilityMinutes,
              textTransform) ==
       std::tie(
              rhs.foregroundColor,
@@ -146,6 +152,8 @@ bool TextAttributes::operator==(const TextAttributes &rhs) const {
              rhs.layoutDirection,
              rhs.accessibilityRole,
              rhs.accessibilityUnit,
+             rhs.accessibilityHours,
+             rhs.accessibilityMinutes,
              rhs.textTransform) &&
       floatEquality(opacity, rhs.opacity) &&
       floatEquality(fontSize, rhs.fontSize) &&
