@@ -20,6 +20,8 @@ const UIView = {
   accessibilityRole: true,
   accessibilityState: true,
   accessibilityUnit: true,
+  accessibilityHours: true,
+  accessibilityMinutes: true,
   accessibilityValue: true,
   accessibilityHint: true,
   accessibilityLanguage: true,

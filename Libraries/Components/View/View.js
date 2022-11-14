@@ -38,6 +38,8 @@ const View: React.AbstractComponent<
       accessibilityRole,
       accessibilityState,
       accessibilityUnit,
+      accessibilityHours,
+      accessibilityMinutes,
       accessibilityValue,
       'aria-busy': ariaBusy,
       'aria-checked': ariaChecked,

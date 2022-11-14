@@ -225,6 +225,8 @@ const Text: React.AbstractComponent<
       {...restProps}
       accessibilityState={_accessibilityState}
       accessibilityUnit={props.accessibilityUnit}
+      accessibilityHours={props.accessibilityHours}
+      accessibilityMinutes={props.accessibilityMinutes}
       {...eventHandlersForText}
       accessibilityLabel={ariaLabel ?? accessibilityLabel}
       accessibilityRole={
@@ -245,6 +247,8 @@ const Text: React.AbstractComponent<
         {...restProps}
         {...eventHandlersForText}
         accessibilityUnit={props.accessibilityUnit}
+        accessibilityHours={props.accessibilityHours}
+        accessibilityMinutes={props.accessibilityMinutes}
         disabled={_disabled}
         selectable={_selectable}
         accessible={

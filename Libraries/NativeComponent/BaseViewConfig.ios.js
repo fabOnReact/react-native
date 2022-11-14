@@ -190,6 +190,8 @@ const validAttributesForNonEventProps = {
   accessibilityRole: true,
   accessibilityState: true,
   accessibilityUnit: false,
+  accessibilityHours: false,
+  accessibilityMinutes: false,
   nativeID: true,
   pointerEvents: true,
   removeClippedSubviews: true,

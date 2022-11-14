@@ -503,6 +503,8 @@ export type ViewProps = $ReadOnly<{|
    */
   accessibilityState?: ?AccessibilityState,
   accessibilityUnit?: ?Stringish,
+  accessibilityHours?: ?number,
+  accessibilityMinutes?: ?number,
   accessibilityValue?: ?AccessibilityValue,
 
   /**
