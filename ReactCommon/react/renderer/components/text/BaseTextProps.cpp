@@ -298,7 +298,7 @@ void BaseTextProps::setProp(
         defaults,
         value,
         textAttributes,
-        accessibilityRole,
+        accessibilityUnit,
         "accessibilityUnit");
     REBUILD_FIELD_SWITCH_CASE(
         defaults, value, textAttributes, opacity, "opacity");

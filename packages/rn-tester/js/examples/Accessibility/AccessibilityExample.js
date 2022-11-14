@@ -172,7 +172,7 @@ class AccessibilityExample extends React.Component<{}> {
               My number is
               <Text
                 accessibilityRole="time"
-                accessibilityUnit="an example of prop"
+                accessibilityUnit="10:30"
                 accessible={true}
                 style={{backgroundColor: 'red'}}>
                 17:00

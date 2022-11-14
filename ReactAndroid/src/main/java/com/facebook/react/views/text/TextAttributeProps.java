@@ -11,7 +11,6 @@ import android.os.Build;
 import android.text.Layout;
 import android.text.TextUtils;
 import android.util.LayoutDirection;
-import android.util.Log;
 import android.view.Gravity;
 import androidx.annotation.Nullable;
 import com.facebook.react.bridge.JSApplicationIllegalArgumentException;
@@ -106,6 +105,7 @@ public class TextAttributeProps {
   protected boolean mIsAccessibilityRoleSet = false;
   protected @Nullable String mAccessibilityUnit = null;
   protected boolean mIsAccessibilityLink = false;
+  protected boolean mIsAccessibilityTtsSpan = false;
 
   protected int mFontStyle = UNSET;
   protected int mFontWeight = UNSET;
@@ -612,15 +612,15 @@ public class TextAttributeProps {
       mIsAccessibilityLink = mAccessibilityRole.equals(AccessibilityRole.LINK);
       String roleClassName =
           AccessibilityRole.getValue(AccessibilityRole.fromValue(accessibilityRole));
-      mAccessibilityUnit =
-          ReactTtsSpan.SUPPORTED_UNIT_TYPES.contains(roleClassName) ? roleClassName : null;
+      mIsAccessibilityTtsSpan =
+          ReactTtsSpan.SUPPORTED_UNIT_TYPES.contains(roleClassName) && Build.VERSION.SDK_INT >= 21;
     }
   }
 
   private void setAccessibilityUnit(@Nullable String accessibilityUnit) {
-    Log.w("TESTING::TextAttributeProps", "setAccessibilityUnit");
-    Log.w("TESTING::TextAttributeProps", "accessibilityUnit: " + (accessibilityUnit));
-    // not yet implemented
+    if (accessibilityUnit != null) {
+      mAccessibilityUnit = accessibilityUnit;
+    }
   }
 
   public static int getTextBreakStrategy(@Nullable String textBreakStrategy) {

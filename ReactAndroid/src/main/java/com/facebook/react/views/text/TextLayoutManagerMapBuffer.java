@@ -19,6 +19,7 @@ import android.text.Spanned;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.util.LayoutDirection;
+import android.util.Log;
 import android.util.LruCache;
 import android.view.View;
 import androidx.annotation.NonNull;
@@ -143,8 +144,12 @@ public class TextLayoutManagerMapBuffer {
         if (textAttributes.mIsAccessibilityLink) {
           ops.add(new SetSpanOperation(start, end, new ReactClickableSpan(reactTag)));
         }
-        if (textAttributes.mAccessibilityUnit != null && Build.VERSION.SDK_INT >= 21) {
+        if (textAttributes.mIsAccessibilityTtsSpan) {
+          // check that textAttributes.mAccessibilityRole == "time"
           ReactTtsSpan.Builder builder = new ReactTtsSpan.Builder(ReactTtsSpan.TYPE_TIME);
+          Log.w(
+              "TESTING::TextLayoutManagerMapBuffer",
+              "textAttributes.mAccessibilityUnit: " + (textAttributes.mAccessibilityUnit));
           builder.setIntArgument(ReactTtsSpan.ARG_HOURS, 10);
           builder.setIntArgument(ReactTtsSpan.ARG_MINUTES, 30);
           ops.add(new SetSpanOperation(start, end, builder.build()));
