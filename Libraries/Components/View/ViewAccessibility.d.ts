@@ -47,6 +47,8 @@ export interface AccessibilityProps
    */
   accessibilityState?: AccessibilityState | undefined;
   accessibilityUnit?: AccessibilityUnit | undefined;
+  accessibilityHours?: number | undefined;
+  accessibilityMinutes?: number | undefined;
 
   /**
    * alias for accessibilityState

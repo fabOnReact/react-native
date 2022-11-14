@@ -183,6 +183,18 @@ static TextAttributes convertRawProp(
       "accessibilityUnit",
       sourceTextAttributes.accessibilityUnit,
       defaultTextAttributes.accessibilityUnit);
+  textAttributes.accessibilityHours = convertRawProp(
+      context,
+      rawProps,
+      "accessibilityHours",
+      sourceTextAttributes.accessibilityHours,
+      defaultTextAttributes.accessibilityHours);
+  textAttributes.accessibilityMinutes = convertRawProp(
+      context,
+      rawProps,
+      "accessibilityMinutes",
+      sourceTextAttributes.accessibilityMinutes,
+      defaultTextAttributes.accessibilityMinutes);
 
   // Color (accessed in this order by ViewProps)
   textAttributes.opacity = convertRawProp(
@@ -300,6 +312,18 @@ void BaseTextProps::setProp(
         textAttributes,
         accessibilityUnit,
         "accessibilityUnit");
+    REBUILD_FIELD_SWITCH_CASE(
+        defaults,
+        value,
+        textAttributes,
+        accessibilityHours,
+        "accessibilityHours");
+    REBUILD_FIELD_SWITCH_CASE(
+        defaults,
+        value,
+        textAttributes,
+        accessibilityMinutes,
+        "accessibilityMinutes");
     REBUILD_FIELD_SWITCH_CASE(
         defaults, value, textAttributes, opacity, "opacity");
     REBUILD_FIELD_SWITCH_CASE(

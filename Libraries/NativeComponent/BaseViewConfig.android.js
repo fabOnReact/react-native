@@ -177,6 +177,8 @@ const validAttributesForNonEventProps = {
   accessibilityCollectionItem: true,
   accessibilityState: true,
   accessibilityUnit: true,
+  accessibilityHours: true,
+  accessibilityMinutes: true,
   accessibilityActions: true,
   accessibilityValue: true,
   importantForAccessibility: true,

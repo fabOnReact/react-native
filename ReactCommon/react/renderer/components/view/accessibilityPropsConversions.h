@@ -191,6 +191,13 @@ inline void fromRawValue(
   */
 }
 
+inline void fromRawValue(
+    const PropsParserContext &context,
+    const RawValue &value,
+    int &result) {
+  result = 9;
+}
+
 inline std::string toString(
     const AccessibilityUnit &accessibilityUnit) {
   return "default string";
