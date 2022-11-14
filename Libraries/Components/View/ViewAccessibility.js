@@ -159,7 +159,7 @@ export type AccessibilityState = {
 };
 
 export type AccessibilityUnit = {
-  hours?: number,
+  hours?: string,
 };
 
 export type AccessibilityValue = $ReadOnly<{|

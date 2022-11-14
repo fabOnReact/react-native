@@ -46,7 +46,6 @@ constexpr MapBuffer::Key ACCESSIBILITY_STATE_DISABLED = 1;
 constexpr MapBuffer::Key ACCESSIBILITY_STATE_EXPANDED = 2;
 constexpr MapBuffer::Key ACCESSIBILITY_STATE_SELECTED = 3;
 constexpr MapBuffer::Key ACCESSIBILITY_STATE_CHECKED = 4;
-constexpr MapBuffer::Key ACCESSIBILITY_UNIT_HOURS = 5;
 
 MapBuffer convertAccessibilityState(AccessibilityState const &state) {
   MapBufferBuilder builder(5);
@@ -73,9 +72,10 @@ MapBuffer convertAccessibilityState(AccessibilityState const &state) {
   return builder.build();
 }
 
-MapBuffer convertAccessibilityUnit(AccessibilityUnit const &state) {
+constexpr MapBuffer::Key ACCESSIBILITY_UNIT_HOURS = 0;
+MapBuffer convertAccessibilityUnit(AccessibilityUnit const &unit) {
   MapBufferBuilder builder(1);
-  builder.putString(ACCESSIBILITY_UNIT_HOURS, "10");
+  builder.putString(ACCESSIBILITY_UNIT_HOURS, unit.hours);
   return builder.build();
 }
 
@@ -141,9 +141,9 @@ void AccessibilityProps::propsDiffMapBuffer(
   }
 
   if (oldProps.accessibilityUnit != newProps.accessibilityUnit) {
-    builder.putString(
+    builder.putMapBuffer(
         AP_ACCESSIBILITY_UNIT,
-        "10");
+        convertAccessibilityUnit(newProps.accessibilityUnit));
   }
 
   if (oldProps.accessibilityValue != newProps.accessibilityValue) {

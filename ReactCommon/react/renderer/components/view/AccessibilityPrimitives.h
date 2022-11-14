@@ -89,7 +89,7 @@ constexpr bool operator!=(
 }
 
 struct AccessibilityUnit {
-  std::optional<std::string> hours;
+  std::string hours{""};
 };
 
 constexpr bool operator==(

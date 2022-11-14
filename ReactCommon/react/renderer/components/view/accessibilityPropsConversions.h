@@ -170,6 +170,26 @@ inline void fromRawValue(
   }
 }
 
+inline void fromRawValue(
+    const PropsParserContext &context,
+    const RawValue &value,
+    AccessibilityUnit &result) {
+  auto map = (butter::map<std::string, RawValue>)value;
+  /*
+  auto hours = map.find("hours");
+  if (hours != map.end()) {
+    // This probably calls toString()
+    fromRawValue(context, hours->second, result.hours);
+  }
+  */
+  if (value.hasType<std::string>()) {
+    auto string = "10";
+    result.hours = string;
+  } else {
+    LOG(ERROR) << "Can not set type string for AccessibilityUnit field hours";
+  }
+}
+
 inline std::string toString(
     const ImportantForAccessibility &importantForAccessibility) {
   switch (importantForAccessibility) {
