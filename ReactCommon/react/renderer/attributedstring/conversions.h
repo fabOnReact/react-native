@@ -1013,11 +1013,11 @@ inline folly::dynamic toDynamic(const TextAttributes &textAttributes) {
     _textAttributes(
         "accessibilityUnit", textAttributes.accessibilityUnit);
   }
-  if (!(textAttributes.accessibilityHours == 0)) {
+  if (!textAttributes.accessibilityHours.empty()) {
     _textAttributes(
         "accessibilityHours", textAttributes.accessibilityHours);
   }
-  if (!(textAttributes.accessibilityMinutes == 0)) {
+  if (!textAttributes.accessibilityMinutes.empty()) {
     _textAttributes(
         "accessibilityMinutes", textAttributes.accessibilityMinutes);
   }
@@ -1250,14 +1250,14 @@ inline MapBuffer toMapBuffer(const TextAttributes &textAttributes) {
     builder.putString(
         TA_KEY_ACCESSIBILITY_UNIT, textAttributes.accessibilityUnit);
   }
-  if (!(textAttributes.accessibilityHours == 0)) {
+  if (!textAttributes.accessibilityHours.empty()) {
 
-    builder.putInt(
+    builder.putString(
         TA_KEY_ACCESSIBILITY_HOURS, textAttributes.accessibilityHours);
   }
-  if (!(textAttributes.accessibilityMinutes == 0)) {
+  if (!textAttributes.accessibilityMinutes.empty()) {
 
-    builder.putInt(
+    builder.putString(
         TA_KEY_ACCESSIBILITY_MINUTES, textAttributes.accessibilityMinutes);
   }
   return builder.build();

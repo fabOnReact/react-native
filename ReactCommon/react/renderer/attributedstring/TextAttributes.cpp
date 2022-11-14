@@ -100,9 +100,9 @@ void TextAttributes::apply(TextAttributes textAttributes) {
       : accessibilityRole;
   accessibilityUnit = !textAttributes.accessibilityUnit.empty() ? textAttributes.accessibilityUnit
                                                   : accessibilityUnit;
-  accessibilityHours = !(textAttributes.accessibilityHours == 0) ? textAttributes.accessibilityHours
+  accessibilityHours = !textAttributes.accessibilityHours.empty() ? textAttributes.accessibilityHours
                                                   : accessibilityHours;
-  accessibilityMinutes = !(textAttributes.accessibilityMinutes == 0) ? textAttributes.accessibilityMinutes
+  accessibilityMinutes = !textAttributes.accessibilityMinutes.empty() ? textAttributes.accessibilityMinutes
                                                   : accessibilityMinutes;
 }
 
@@ -222,6 +222,8 @@ SharedDebugStringConvertibleList TextAttributes::getDebugProps() const {
       debugStringConvertibleItem("layoutDirection", layoutDirection),
       debugStringConvertibleItem("accessibilityRole", accessibilityRole),
       debugStringConvertibleItem("accessibilityUnit", accessibilityUnit),
+      debugStringConvertibleItem("accessibilityHours", accessibilityHours),
+      debugStringConvertibleItem("accessibilityMinutes", accessibilityMinutes),
   };
 }
 #endif

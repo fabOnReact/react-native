@@ -80,8 +80,8 @@ class TextAttributes : public DebugStringConvertible {
   std::optional<LayoutDirection> layoutDirection{};
   std::optional<AccessibilityRole> accessibilityRole{};
   std::string accessibilityUnit{};
-  int accessibilityHours{};
-  int accessibilityMinutes{};
+  std::string accessibilityHours{};
+  std::string accessibilityMinutes{};
 
 #pragma mark - Operations
 

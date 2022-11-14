@@ -40,8 +40,8 @@ class AccessibilityProps {
   bool accessible{false};
   AccessibilityState accessibilityState;
   AccessibilityUnit accessibilityUnit;
-  int accessibilityHours;
-  int accessibilityMinutes;
+  AccessibilityUnit accessibilityHours;
+  AccessibilityUnit accessibilityMinutes;
   std::string accessibilityLabel{""};
   AccessibilityLabelledBy accessibilityLabelledBy{};
   AccessibilityLiveRegion accessibilityLiveRegion{
