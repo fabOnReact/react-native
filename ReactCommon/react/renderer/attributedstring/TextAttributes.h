@@ -79,7 +79,7 @@ class TextAttributes : public DebugStringConvertible {
   // construction.
   std::optional<LayoutDirection> layoutDirection{};
   std::optional<AccessibilityRole> accessibilityRole{};
-  AccessibilityUnit accessibilityUnit{};
+  std::string accessibilityUnit{};
 
 #pragma mark - Operations
 

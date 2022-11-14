@@ -135,10 +135,6 @@ enum class AccessibilityRole {
   Toolbar,
 };
 
-struct AccessibilityUnit {
-  std::string hours{""};
-};
-
 enum class TextTransform {
   None,
   Uppercase,
