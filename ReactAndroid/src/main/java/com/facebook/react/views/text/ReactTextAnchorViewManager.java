@@ -14,7 +14,6 @@ import android.text.TextUtils;
 import android.text.util.Linkify;
 import android.view.Gravity;
 import android.view.View;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.facebook.common.logging.FLog;
 import com.facebook.react.bridge.JSApplicationIllegalArgumentException;
@@ -47,12 +46,6 @@ public abstract class ReactTextAnchorViewManager<T extends View, C extends React
   @ReactProp(name = "accessible")
   public void setAccessible(ReactTextView view, boolean accessible) {
     view.setFocusable(accessible);
-  }
-
-  @Override
-  @ReactProp(name = ViewProps.ACCESSIBILITY_UNIT)
-  public void setAccessibilityUnit(@NonNull T view, @Nullable String accessibilityUnit) {
-    // do nothing
   }
 
   // maxLines can only be set in master view (block), doesn't really make sense to set in a span

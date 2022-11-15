@@ -184,13 +184,6 @@ public abstract class ReactBaseTextShadowNode extends LayoutShadowNode {
         ops.add(
             new SetSpanOperation(start, end, new ReactClickableSpan(textShadowNode.getReactTag())));
       }
-      if (textShadowNode.mAccessibilityUnit != null && Build.VERSION.SDK_INT >= 21) {
-        /*
-        ops.add(
-            new SetSpanOperation(
-                start, end, new ReactTtsSpan.Builder(textShadowNode.mAccessibilityUnit).build()));
-                */
-      }
       float effectiveLetterSpacing = textAttributes.getEffectiveLetterSpacing();
       if (!Float.isNaN(effectiveLetterSpacing)
           && (parentTextAttributes == null
@@ -516,15 +509,6 @@ public abstract class ReactBaseTextShadowNode extends LayoutShadowNode {
       markUpdated();
     }
   }
-
-  /*
-  @ReactProp(name = "accessibilityUnit")
-  public void setAccessibilityUnit(@Nullable String accessibilityUnit) {
-    if (isVirtual()) {
-      markUpdated();
-    }
-  }
-  */
 
   @ReactProp(name = ViewProps.FONT_FAMILY)
   public void setFontFamily(@Nullable String fontFamily) {
