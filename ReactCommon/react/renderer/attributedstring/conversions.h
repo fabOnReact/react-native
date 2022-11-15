@@ -1231,12 +1231,10 @@ inline MapBuffer toMapBuffer(const TextAttributes &textAttributes) {
         TA_KEY_LAYOUT_DIRECTION, toString(*textAttributes.layoutDirection));
   }
   if (textAttributes.accessibilityRole.has_value()) {
-
     builder.putString(
         TA_KEY_ACCESSIBILITY_ROLE, toString(*textAttributes.accessibilityRole));
   }
   if (!textAttributes.accessibilityUnit.empty()) {
-
     builder.putString(
         TA_KEY_ACCESSIBILITY_UNIT, textAttributes.accessibilityUnit);
   }

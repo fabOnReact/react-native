@@ -72,13 +72,6 @@ MapBuffer convertAccessibilityState(AccessibilityState const &state) {
   return builder.build();
 }
 
-constexpr MapBuffer::Key ACCESSIBILITY_UNIT_HOURS = 0;
-MapBuffer convertAccessibilityUnit(AccessibilityUnit const &unit) {
-  MapBufferBuilder builder(1);
-  builder.putString(ACCESSIBILITY_UNIT_HOURS, unit.hours);
-  return builder.build();
-}
-
 // TODO: Currently unsupported: nextFocusForward/Left/Up/Right/Down
 void AccessibilityProps::propsDiffMapBuffer(
     Props const *oldPropsPtr,
@@ -141,9 +134,9 @@ void AccessibilityProps::propsDiffMapBuffer(
   }
 
   if (oldProps.accessibilityUnit != newProps.accessibilityUnit) {
-    builder.putMapBuffer(
+    builder.putString(
         AP_ACCESSIBILITY_UNIT,
-        convertAccessibilityUnit(newProps.accessibilityUnit));
+        newProps.accessibilityUnit);
   }
 
   if (oldProps.accessibilityValue != newProps.accessibilityValue) {
