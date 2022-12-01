@@ -236,25 +236,29 @@ const Text: React.AbstractComponent<
   //    f --> edcb --> a
   // 3) pop first item and trigger again announcement
   // 4) when failure triggers, add it to the queue
-  const announcementQueue = [];
+  let retryAnnouncement;
   // the event listener detects if VoiceOver announcement fails
   AccessibilityInfo.addEventListener(
     'announcementFinished',
     ({announcement, success}) => {
-      const firstItem = announcementQueue[0];
-      if (announcementQueue.length > 3) {
-        console.log('max queue of 3 reached, announcement skipped');
-        return;
-      }
-      if (announcement === firstItem) {
+      if (!success && retryAnnouncement == null) {
+        retryAnnouncement = announcement;
+        console.log('retry announcement');
+        console.log('announcement:', announcement);
         AccessibilityInfo.announceForAccessibility(announcement);
-        const deletedItem = announcementQueue.shift();
-        console.log('deleting first item in queue');
-        console.log('deletedItem:', deletedItem);
-      } else {
-        announcementQueue.push(announcement);
-        console.log('adding item to queue');
-        console.log('announcementQueue:', announcementQueue);
+      }
+      if (success && retryAnnouncement === announcement) {
+        console.log('announcement succed, clear retryAnnouncement');
+        console.log('announcement:', announcement);
+        retryAnnouncement = null;
+      }
+
+      if (!success && retryAnnouncement != announcement) {
+        console.log(
+          'skip retry announcement for ' +
+            announcement +
+            'as another announcement failed and we try only 1 per time',
+        );
       }
     },
   );
@@ -268,7 +272,6 @@ const Text: React.AbstractComponent<
         typeof restProps.children === 'string'
       ) {
         const queue = restProps.accessibilityLiveRegion === 'polite';
-        announcementQueue.push(restProps.children);
         AccessibilityInfo.announceForAccessibilityWithOptions(
           restProps.children,
           {queue},
