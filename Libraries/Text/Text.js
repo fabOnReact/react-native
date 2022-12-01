@@ -231,11 +231,6 @@ const Text: React.AbstractComponent<
   const _hasOnPressOrOnLongPress =
     props.onPress != null || props.onLongPress != null;
 
-  // 1) trigger the announcement and add to the queue
-  // 2) failure -> if first item in queue equal to the that failed
-  //    f --> edcb --> a
-  // 3) pop first item and trigger again announcement
-  // 4) when failure triggers, add it to the queue
   let retryAnnouncement;
   // the event listener detects if VoiceOver announcement fails
   AccessibilityInfo.addEventListener(
