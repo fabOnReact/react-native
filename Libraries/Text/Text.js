@@ -248,7 +248,7 @@ const Text: React.AbstractComponent<
         retryAnnouncement = null;
       }
 
-      if (!success && retryAnnouncement != announcement) {
+      if (!success && retryAnnouncement !== announcement) {
         console.log(
           'skip retry announcement for ' +
             announcement +
@@ -259,21 +259,20 @@ const Text: React.AbstractComponent<
   );
 
   // trigger voiceover announcement when text changes
-  if (Platform.OS === 'ios') {
-    React.useEffect(() => {
-      if (
-        restProps.accessibilityLiveRegion != null &&
-        restProps.accessibilityLiveRegion != 'none' &&
-        typeof restProps.children === 'string'
-      ) {
-        const queue = restProps.accessibilityLiveRegion === 'polite';
-        AccessibilityInfo.announceForAccessibilityWithOptions(
-          restProps.children,
-          {queue},
-        );
-      }
-    }, [restProps.children]);
-  }
+  React.useEffect(() => {
+    if (
+      Platform.OS === 'ios' &&
+      restProps.accessibilityLiveRegion != null &&
+      restProps.accessibilityLiveRegion !== 'none' &&
+      typeof restProps.children === 'string'
+    ) {
+      const queue = restProps.accessibilityLiveRegion === 'polite';
+      AccessibilityInfo.announceForAccessibilityWithOptions(
+        restProps.children,
+        {queue},
+      );
+    }
+  }, [restProps.children]);
 
   return hasTextAncestor ? (
     <NativeVirtualText
