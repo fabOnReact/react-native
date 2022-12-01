@@ -231,6 +231,52 @@ const Text: React.AbstractComponent<
   const _hasOnPressOrOnLongPress =
     props.onPress != null || props.onLongPress != null;
 
+  // 1) trigger the announcement and add to the queue
+  // 2) failure -> if first item in queue equal to the that failed
+  //    f --> edcb --> a
+  // 3) pop first item and trigger again announcement
+  // 4) when failure triggers, add it to the queue
+  const announcementQueue = [];
+  // the event listener detects if VoiceOver announcement fails
+  AccessibilityInfo.addEventListener(
+    'announcementFinished',
+    ({announcement, success}) => {
+      const firstItem = announcementQueue[0];
+      if (announcementQueue.length > 3) {
+        console.log('max queue of 3 reached, announcement skipped');
+        return;
+      }
+      if (announcement === firstItem) {
+        AccessibilityInfo.announceForAccessibility(announcement);
+        const deletedItem = announcementQueue.shift();
+        console.log('deleting first item in queue');
+        console.log('deletedItem:', deletedItem);
+      } else {
+        announcementQueue.push(announcement);
+        console.log('adding item to queue');
+        console.log('announcementQueue:', announcementQueue);
+      }
+    },
+  );
+
+  // trigger voiceover announcement when text changes
+  if (Platform.OS === 'ios') {
+    React.useEffect(() => {
+      if (
+        restProps.accessibilityLiveRegion != null &&
+        restProps.accessibilityLiveRegion != 'none' &&
+        typeof restProps.children === 'string'
+      ) {
+        const queue = restProps.accessibilityLiveRegion === 'polite';
+        announcementQueue.push(restProps.children);
+        AccessibilityInfo.announceForAccessibilityWithOptions(
+          restProps.children,
+          {queue},
+        );
+      }
+    }, [restProps.children]);
+  }
+
   return hasTextAncestor ? (
     <NativeVirtualText
       {...restProps}
