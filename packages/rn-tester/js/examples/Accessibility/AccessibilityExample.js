@@ -1588,16 +1588,7 @@ function AccessibilityLiveRegion(): React.Node {
   const [liveRegion, setLiveRegion] = React.useState(true);
   return (
     <>
-      <RNTesterBlock title="LiveRegion with Text Component">
-        <TouchableWithoutFeedback
-          onPress={() => setCount(previousCount => previousCount + 1)}>
-          <View style={styles.embedded}>
-            <Text>Click me</Text>
-          </View>
-        </TouchableWithoutFeedback>
-        <Text accessibilityLiveRegion="polite">Clicked {count} times</Text>
-      </RNTesterBlock>
-      <RNTesterBlock title="LiveRegion with child component">
+      <RNTesterBlock title="Child liveRegion assertive stops the parent component announcement">
         <TouchableWithoutFeedback
           onPress={() =>
             setLiveRegion(liveRegionEnabled => !liveRegionEnabled)
@@ -1617,9 +1608,10 @@ function AccessibilityLiveRegion(): React.Node {
         <View
           accessible={true}
           focusable={true}
-          accessibilityLiveRegion={liveRegion ? 'assertive' : null}>
-          <TouchableOpacity
-            accessibilityLabel={enabled ? 'my label' : null}
+          accessibilityLabel={enabled ? 'my parent' : null}
+          accessibilityLiveRegion={liveRegion ? 'polite' : null}>
+          <View
+            accessible={false}
             accessibilityState={{disabled: enabled}}
             accessibilityHint={enabled ? 'my hint' : null}
             accessibilityValue={enabled ? {now: 5, min: 1, max: 10} : {}}
@@ -1630,6 +1622,15 @@ function AccessibilityLiveRegion(): React.Node {
             }}
           />
         </View>
+      </RNTesterBlock>
+      <RNTesterBlock title="LiveRegion with Text Component">
+        <TouchableWithoutFeedback
+          onPress={() => setCount(previousCount => previousCount + 1)}>
+          <View style={styles.embedded}>
+            <Text>Click me</Text>
+          </View>
+        </TouchableWithoutFeedback>
+        <Text accessibilityLiveRegion="polite">Clicked {count} times</Text>
       </RNTesterBlock>
     </>
   );

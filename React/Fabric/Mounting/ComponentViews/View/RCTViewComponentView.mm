@@ -304,11 +304,16 @@ using namespace facebook::react;
     if (newViewProps.accessibilityLiveRegion == AccessibilityLiveRegion::None) {
       newValueLiveRegion = @"none";
     };
-
-    for (RCTViewComponentView *subview in self.subviews) {
-      // add logic to over-ride behaviour when subview accessibilityLiveRegion is Polite or Assertive
-      if ([newValueLiveRegion length] != 0) {
-        subview.accessibilityLiveRegionAnnouncementType = newValueLiveRegion;
+    
+    if (![newValueLiveRegion isEqual:@"none"] && [newValueLiveRegion length] != 0) {
+      for (RCTViewComponentView *subview in self.subviews) {
+        // add logic to over-ride behaviour when subview accessibilityLiveRegion is Polite or Assertive
+        auto const &childAccessibilityProps = *std::static_pointer_cast<AccessibilityProps const>(_props);
+        if (childAccessibilityProps.accessibilityLiveRegion != AccessibilityLiveRegion::None) {
+          break;
+        } else {
+          subview.accessibilityLiveRegionAnnouncementType = newValueLiveRegion;
+        }
       }
     }
     self.accessibilityLiveRegionAnnouncementType = newValueLiveRegion;
@@ -318,7 +323,7 @@ using namespace facebook::react;
   NSMutableArray *accessibilityLiveRegionAnnouncementUpdate = [accessibilityLiveRegionAnnouncement mutableCopy];
   BOOL accessibilityLiveRegionEnabledFromParent = self.accessibilityLiveRegionAnnouncementType && ![self.accessibilityLiveRegionAnnouncementType isEqual:@"none"];
   BOOL isReactRootView = RCTIsReactRootView(self.reactTag);
-  BOOL accessibilityLiveRegionEnabled = newViewProps.accessibilityLiveRegion != AccessibilityLiveRegion::None;
+  BOOL accessibilityLiveRegionEnabled = newViewProps.accessible && newViewProps.accessibilityLiveRegion != AccessibilityLiveRegion::None;
   BOOL shouldAnnounceLiveRegionChanges = (accessibilityLiveRegionEnabledFromParent || accessibilityLiveRegionEnabled) && !isReactRootView;
   
   // `accessibilityLabel`
