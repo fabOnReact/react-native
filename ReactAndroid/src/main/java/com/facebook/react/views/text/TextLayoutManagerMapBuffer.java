@@ -146,6 +146,7 @@ public class TextLayoutManagerMapBuffer {
           // new ReactLeadingMarginSpan.Standard(0,5), 0, demoSpannableString.length(),
           // Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
+
         if (textAttributes.mIsColorSet) {
           ops.add(
               new SetSpanOperation(

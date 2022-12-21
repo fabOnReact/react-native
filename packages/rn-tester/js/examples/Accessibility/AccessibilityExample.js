@@ -1584,48 +1584,31 @@ function AccessibilityExpandedExample(): React.Node {
   const collapseAction = {name: 'collapse'};
   return (
     <>
-      <RNTesterBlock title="Collapse/Expanded state change (Paper)">
-        <Text>
-          The following component{'\n'}
-          <Text accessibilityRole="link">a link with leading margin</Text>
+      <View style={{height: 150}}>
+        <Text
+          style={{backgroundColor: 'yellow', flexDirection: 'column-reverse'}}>
+          <Image
+            source={{uri: 'https://via.placeholder.com/100'}}
+            style={{
+              width: 70,
+              height: 70,
+              backgroundColor: 'red',
+            }}
+          />
+          <Text
+            style={{
+              lineHeight: 10,
+              backgroundColor: 'green',
+              position: 'relative',
+              top: -100,
+            }}>
+            This is long text it should wrap around the image. Lorem ipsum even
+            more haha that's kind of cool. Is this working? It is but it's only
+            keeping the first line of text and then the second line and on are
+            on top of the image.
+          </Text>
         </Text>
-        <Button
-          onPress={() => setExpanded(!expand)}
-          accessibilityState={{expanded: expand}}
-          accessibilityActions={expand ? [collapseAction] : [expandAction]}
-          onAccessibilityAction={event => {
-            switch (event.nativeEvent.actionName) {
-              case 'expand':
-                setExpanded(true);
-                break;
-              case 'collapse':
-                setExpanded(false);
-                break;
-            }
-          }}
-          title="click me to change state"
-        />
-      </RNTesterBlock>
-
-      <RNTesterBlock title="Screenreader announces the visible text">
-        <Text>Announcing expanded/collapse and the visible text.</Text>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => setExpanded(!expand)}
-          accessibilityState={{expanded: expand}}>
-          <Text>Click me to change state</Text>
-        </TouchableOpacity>
-      </RNTesterBlock>
-
-      <RNTesterBlock title="expanded/collapsed only managed through the accessibility menu">
-        <TouchableWithoutFeedback
-          accessibilityState={{expanded: true}}
-          accessible={true}>
-          <View>
-            <Text>Clicking me does not change state</Text>
-          </View>
-        </TouchableWithoutFeedback>
-      </RNTesterBlock>
+      </View>
     </>
   );
 }
