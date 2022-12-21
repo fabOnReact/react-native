@@ -1586,7 +1586,8 @@ function AccessibilityExpandedExample(): React.Node {
     <>
       <RNTesterBlock title="Collapse/Expanded state change (Paper)">
         <Text>
-          The following component announces expanded/collapsed state correctly
+          The following component{'\n'}
+          <Text accessibilityRole="link">a link with leading margin</Text>
         </Text>
         <Button
           onPress={() => setExpanded(!expand)}

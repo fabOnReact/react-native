@@ -141,7 +141,10 @@ public class TextLayoutManagerMapBuffer {
                 new TextInlineViewPlaceholderSpan(reactTag, (int) width, (int) height)));
       } else if (end >= start) {
         if (textAttributes.mIsAccessibilityLink) {
-          ops.add(new SetSpanOperation(start, end, new ReactClickableSpan(reactTag)));
+          FLog.w("React::" + TAG, "start: " + (start));
+          ops.add(new SetSpanOperation(start, end, new ReactLeadingMarginSpan.Standard(250, 250)));
+          // new ReactLeadingMarginSpan.Standard(0,5), 0, demoSpannableString.length(),
+          // Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
         if (textAttributes.mIsColorSet) {
           ops.add(
