@@ -159,7 +159,11 @@ public class TextLayoutManagerMapBuffer {
                   start, end, new CustomLetterSpacingSpan(textAttributes.getLetterSpacing())));
         }
         ops.add(
-            new SetSpanOperation(start, end, new ReactAbsoluteSizeSpan(textAttributes.mFontSize)));
+            new SetSpanOperation(
+                start,
+                end,
+                new ReactAbsoluteSizeSpan(
+                    textAttributes.mFontSize, textAttributes.mVerticalAlign)));
         if (textAttributes.mFontStyle != UNSET
             || textAttributes.mFontWeight != UNSET
             || textAttributes.mFontFamily != null
@@ -176,7 +180,8 @@ public class TextLayoutManagerMapBuffer {
                       textAttributes.mFontFamily,
                       context.getAssets(),
                       textAttributes.mVerticalAlign,
-                      currentText)));
+                      currentText,
+                      textAttributes.mFontSize)));
         }
         if (textAttributes.mIsUnderlineTextDecorationSet) {
           ops.add(new SetSpanOperation(start, end, new ReactUnderlineSpan()));

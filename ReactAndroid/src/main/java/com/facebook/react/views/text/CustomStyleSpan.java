@@ -13,6 +13,7 @@ import android.graphics.Typeface;
 import android.text.TextPaint;
 import android.text.style.MetricAffectingSpan;
 import androidx.annotation.Nullable;
+import com.facebook.common.logging.FLog;
 import com.facebook.infer.annotation.Nullsafe;
 
 @Nullsafe(Nullsafe.Mode.LOCAL)
@@ -38,6 +39,7 @@ public class CustomStyleSpan extends MetricAffectingSpan implements ReactSpan {
   private final String mCurrentText;
   private String mTextAlignVertical;
   private int mHighestLineHeight;
+  private static float mFontSize;
 
   public CustomStyleSpan(
       int fontStyle,
@@ -46,7 +48,8 @@ public class CustomStyleSpan extends MetricAffectingSpan implements ReactSpan {
       @Nullable String fontFamily,
       AssetManager assetManager,
       @Nullable String textAlignVertical,
-      String currentText) {
+      String currentText,
+      @Nullable int fontSize) {
     mStyle = fontStyle;
     mWeight = fontWeight;
     mFeatureSettings = fontFeatureSettings;
@@ -54,6 +57,7 @@ public class CustomStyleSpan extends MetricAffectingSpan implements ReactSpan {
     mAssetManager = assetManager;
     mTextAlignVertical = textAlignVertical;
     mCurrentText = currentText;
+    mFontSize = fontSize;
   }
 
   @Override
@@ -120,31 +124,44 @@ public class CustomStyleSpan extends MetricAffectingSpan implements ReactSpan {
           // the span with the highest lineHeight sets the height for all rows
           paint.baselineShift -= highestLineHeight / 2 - paint.getTextSize() / 2;
         } else {
+          String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
+          FLog.w(
+              "React::" + "CustomStyleSpan",
+              methodName
+                  + " mCurrentText: "
+                  + (currentText)
+                  + " paint.getFontMetrics().top: "
+                  + (paint.getFontMetrics().top)
+                  + " paint.ascent(): "
+                  + (paint.ascent())
+                  + " paint.baselineShift: "
+                  + (paint.baselineShift)
+                  + " paint.getFontMetrics().bottom: "
+                  + (paint.getFontMetrics().bottom)
+                  + " paint.descent(): "
+                  + (paint.descent())
+                  + " paint.getTextSize(): "
+                  + (paint.getTextSize())
+                  + " mFontSize: "
+                  + (mFontSize));
           // works only with single line
           // if lineHeight is not set, align the text using the font metrics
           // https://stackoverflow.com/a/27631737/7295772
-          // top      -------------  -26          | +26   ^ -5
-          // ascent   -------------  -30  ^ -31   |       |
-          // baseline __my Text____   0   |       |       |
-          // descent  _____________   8   |       |
-          // bottom   _____________   1   |       V
-          paint.baselineShift -= bounds.bottom - paint.ascent() + bounds.top;
+          // top      -------------  -41  ^               ^
+          // ascent   -------------  -36  | -51   | +36   ^ -15
+          // baseline __my Text____   0   |       v       ^
+          // descent  _____________   9   |               ^
+          // bottom   _____________   10  |
+          // paint.baselineShift +=
+          //    (paint.getFontMetrics().top - paint.getFontMetrics().ascent) * mFontSize / 33;
         }
       }
       if (textAlignVertical == "bottom-child") {
         if (highestLineHeight != 0) {
-          // the span with the highest lineHeight sets the height for all rows
           paint.baselineShift += highestLineHeight / 2 - paint.getTextSize() / 2;
         } else {
-          // works only with single line
-          // if lineHeight is not set, align the text using the font metrics
-          // https://stackoverflow.com/a/27631737/7295772
-          // top      -------------  -26
-          // ascent   -------------  -30
-          // baseline __my Text____   0   |
-          // descent  _____________   8   | +8
-          // bottom   _____________   1   V
-          paint.baselineShift += paint.descent();
+          // paint.baselineShift += (paint.getFontMetrics().bottom - paint.descent()) * mFontSize /
+          // 33;
         }
       }
     }
