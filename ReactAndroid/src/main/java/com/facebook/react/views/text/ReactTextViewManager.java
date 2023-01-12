@@ -8,9 +8,11 @@
 package com.facebook.react.views.text;
 
 import android.content.Context;
+import android.text.Layout;
 import android.text.Spannable;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import com.facebook.common.logging.FLog;
 import com.facebook.react.R;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableNativeMap;
@@ -43,6 +45,7 @@ public class ReactTextViewManager
   private static final short TX_STATE_KEY_MOST_RECENT_EVENT_COUNT = 3;
 
   @VisibleForTesting public static final String REACT_CLASS = "RCTText";
+  private static final String TAG = "ReactTextViewManager";
 
   protected @Nullable ReactTextViewManagerCallback mReactTextViewManagerCallback;
 
@@ -104,20 +107,27 @@ public class ReactTextViewManager
 
     CustomLineHeightSpan[] customLineHeightSpans =
         spannable.getSpans(0, spannable.length(), CustomLineHeightSpan.class);
+    int highestLineHeight = 0;
     if (customLineHeightSpans.length > 0) {
-      int highestLineHeight = 0;
       for (CustomLineHeightSpan span : customLineHeightSpans) {
         if (highestLineHeight == 0 || span.getLineHeight() > highestLineHeight) {
           highestLineHeight = span.getLineHeight();
         }
       }
+    }
 
-      CustomStyleSpan[] customStyleSpans =
-          spannable.getSpans(0, spannable.length(), CustomStyleSpan.class);
-      if (customStyleSpans.length != 0) {
-        for (CustomStyleSpan span : customStyleSpans) {
-          span.updateSpan(highestLineHeight);
-        }
+    CustomStyleSpan[] customStyleSpans =
+        spannable.getSpans(0, spannable.length(), CustomStyleSpan.class);
+    if (customStyleSpans.length != 0) {
+      Layout layout = view.getLayout();
+      int lineCount = layout != null ? layout.getLineCount() : 1;
+      int lineHeight = layout != null ? layout.getHeight() : 0;
+      String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
+      FLog.w(
+          "React::" + TAG,
+          methodName + " update.getText(): " + (update.getText()) + " lineHeight: " + (lineHeight));
+      for (CustomStyleSpan span : customStyleSpans) {
+        span.updateSpan(highestLineHeight, lineCount, lineHeight);
       }
     }
   }

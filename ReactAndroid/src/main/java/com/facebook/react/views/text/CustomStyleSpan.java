@@ -38,6 +38,8 @@ public class CustomStyleSpan extends MetricAffectingSpan implements ReactSpan {
   private final String mCurrentText;
   private String mTextAlignVertical;
   private int mHighestLineHeight;
+  private int mLineHeight;
+  private int mLineCount;
 
   public CustomStyleSpan(
       int fontStyle,
@@ -67,7 +69,8 @@ public class CustomStyleSpan extends MetricAffectingSpan implements ReactSpan {
         mAssetManager,
         mTextAlignVertical,
         mCurrentText,
-        mHighestLineHeight);
+        mHighestLineHeight,
+        mLineHeight);
   }
 
   @Override
@@ -81,7 +84,8 @@ public class CustomStyleSpan extends MetricAffectingSpan implements ReactSpan {
         mAssetManager,
         mTextAlignVertical,
         mCurrentText,
-        mHighestLineHeight);
+        mHighestLineHeight,
+        mLineHeight);
   }
 
   public int getStyle() {
@@ -105,7 +109,8 @@ public class CustomStyleSpan extends MetricAffectingSpan implements ReactSpan {
       AssetManager assetManager,
       @Nullable String textAlignVertical,
       String currentText,
-      int highestLineHeight) {
+      int highestLineHeight,
+      int lineHeight) {
     Typeface typeface =
         ReactTypefaceUtils.applyStyles(paint.getTypeface(), style, weight, family, assetManager);
     paint.setFontFeatureSettings(fontFeatureSettings);
@@ -119,33 +124,39 @@ public class CustomStyleSpan extends MetricAffectingSpan implements ReactSpan {
         if (highestLineHeight != 0) {
           // the span with the highest lineHeight sets the height for all rows
           paint.baselineShift -= highestLineHeight / 2 - paint.getTextSize() / 2;
+        } else if (lineHeight > 0) {
+          paint.baselineShift -= lineHeight / 2 - paint.getTextSize() / 2;
         } else {
           // works only with single line and without fontSize
           // https://bit.ly/3W2eJKT
           // if lineHeight is not set, align the text using the font metrics
           // https://stackoverflow.com/a/27631737/7295772
-          // top      -------------  -26
-          // ascent   -------------  -30
-          // baseline __my Text____   0
-          // descent  _____________   8
-          // bottom   _____________   1
-          paint.baselineShift += paint.getFontMetrics().top - paint.getFontMetrics().ascent;
+          // top      -------------
+          // ascent   -------------
+          // baseline __my Text____
+          // descent  _____________
+          // bottom   _____________
+          // paint.baselineShift += paint.getFontMetrics().top - paint.getFontMetrics().ascent;
         }
       }
       if (textAlignVertical == "bottom-child") {
         if (highestLineHeight != 0) {
           // the span with the highest lineHeight sets the height for all rows
           paint.baselineShift += highestLineHeight / 2 - paint.getTextSize() / 2;
+        } else if (lineHeight > 0) {
+          paint.baselineShift += lineHeight / 2 - paint.getTextSize() / 2;
         } else {
           // works only with single line and without fontSize
           // https://bit.ly/3W2eJKT
-          paint.baselineShift += paint.getFontMetrics().bottom - paint.descent();
+          // paint.baselineShift += paint.getFontMetrics().bottom - paint.descent();
         }
       }
     }
   }
 
-  public void updateSpan(int highestLineHeight) {
+  public void updateSpan(int highestLineHeight, int lineCount, int lineHeight) {
     mHighestLineHeight = highestLineHeight;
+    mLineCount = lineCount;
+    mLineHeight = lineHeight;
   }
 }
