@@ -12,7 +12,6 @@ import android.text.Layout;
 import android.text.Spannable;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.facebook.common.logging.FLog;
 import com.facebook.react.R;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableNativeMap;
@@ -122,10 +121,6 @@ public class ReactTextViewManager
       Layout layout = view.getLayout();
       int lineCount = layout != null ? layout.getLineCount() : 1;
       int lineHeight = layout != null ? layout.getHeight() : 0;
-      String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-      FLog.w(
-          "React::" + TAG,
-          methodName + " update.getText(): " + (update.getText()) + " lineHeight: " + (lineHeight));
       for (CustomStyleSpan span : customStyleSpans) {
         span.updateSpan(highestLineHeight, lineCount, lineHeight);
       }

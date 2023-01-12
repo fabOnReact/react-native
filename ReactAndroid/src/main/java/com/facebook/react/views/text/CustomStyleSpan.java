@@ -13,11 +13,13 @@ import android.graphics.Typeface;
 import android.text.TextPaint;
 import android.text.style.MetricAffectingSpan;
 import androidx.annotation.Nullable;
+import com.facebook.common.logging.FLog;
 import com.facebook.infer.annotation.Nullsafe;
 
 @Nullsafe(Nullsafe.Mode.LOCAL)
 public class CustomStyleSpan extends MetricAffectingSpan implements ReactSpan {
 
+  private static final String TAG = "CustomStyleSpan";
   /**
    * A {@link MetricAffectingSpan} that allows to change the style of the displayed font.
    * CustomStyleSpan will try to load the fontFamily with the right style and weight from the
@@ -125,7 +127,22 @@ public class CustomStyleSpan extends MetricAffectingSpan implements ReactSpan {
           // the span with the highest lineHeight sets the height for all rows
           paint.baselineShift -= highestLineHeight / 2 - paint.getTextSize() / 2;
         } else if (lineHeight > 0) {
-          paint.baselineShift -= lineHeight / 2 - paint.getTextSize() / 2;
+          float fontHeight = paint.getFontMetrics().bottom - paint.getFontMetrics().top;
+          String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
+          FLog.w(
+              "React::" + TAG,
+              methodName
+                  + " currentText: "
+                  + (currentText)
+                  + " fontHeight: "
+                  + (fontHeight)
+                  + " lineHeight: "
+                  + (lineHeight)
+                  + " paint.getFontMetrics().top: "
+                  + (paint.getFontMetrics().top)
+                  + " paint.getFontMetrics().bottom: "
+                  + (paint.getFontMetrics().bottom));
+          paint.baselineShift -= lineHeight - paint.getTextSize();
         } else {
           // works only with single line and without fontSize
           // https://bit.ly/3W2eJKT
@@ -144,7 +161,7 @@ public class CustomStyleSpan extends MetricAffectingSpan implements ReactSpan {
           // the span with the highest lineHeight sets the height for all rows
           paint.baselineShift += highestLineHeight / 2 - paint.getTextSize() / 2;
         } else if (lineHeight > 0) {
-          paint.baselineShift += lineHeight / 2 - paint.getTextSize() / 2;
+          paint.baselineShift += lineHeight - paint.getTextSize();
         } else {
           // works only with single line and without fontSize
           // https://bit.ly/3W2eJKT

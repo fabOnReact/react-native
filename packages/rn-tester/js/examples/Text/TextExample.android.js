@@ -312,6 +312,7 @@ class NestedTextVerticalAlign extends React.Component<{...}> {
           <Text>
             vertical align is set to{' '}
             <Text style={{backgroundColor: 'red'}}>{textAlignVertical}</Text>
+            <Text style={{backgroundColor: 'green'}}>{fontSize}</Text>
           </Text>
           <Button
             onPress={() => this.changeVerticalAlign()}
@@ -323,20 +324,25 @@ class NestedTextVerticalAlign extends React.Component<{...}> {
           />
           <Button onPress={() => this.increaseFont()} title="increase font" />
           <View>
-            <Text
-              style={{
-                fontSize,
-                backgroundColor: 'yellow',
-              }}>
+            <View style={{height: 300, backgroundColor: 'red'}}>
               <Text
                 style={{
-                  textAlignVertical,
-                  backgroundColor: 'green',
-                  color: 'white',
+                  flex: 1,
+                  fontSize,
+                  textAlignVertical: 'center',
+                  allowFontScaling: false,
+                  backgroundColor: 'yellow',
                 }}>
-                Custom font
+                <Text
+                  style={{
+                    textAlignVertical,
+                    backgroundColor: 'green',
+                    color: 'white',
+                  }}>
+                  CusTom teXt PjYx;,\
+                </Text>
               </Text>
-            </Text>
+            </View>
             <Text>
               Without lineHeight prop, the green text is correctly aligned, but
               does not support ReactAbsoluteSizeSpan (nested Text with different
