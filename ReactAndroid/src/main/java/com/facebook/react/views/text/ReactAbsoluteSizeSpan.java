@@ -48,6 +48,15 @@ public class ReactAbsoluteSizeSpan extends AbsoluteSizeSpan implements ReactSpan
         ds.baselineShift += ds.getFontMetrics().bottom - ds.descent();
       }
     } else {
+      /*
+      inline image
+      if (mTextAlignVertical == "top-child") {
+        ds.baselineShift -= mHighestLineHeight;
+      }
+      if (mTextAlignVertical == "center-child") {
+        ds.baselineShift -= mHighestLineHeight / 2;
+      }
+      */
       if (mHighestFontSize == getSize()) {
         // aligns text vertically in the lineHeight
         if (mTextAlignVertical == "top-child") {

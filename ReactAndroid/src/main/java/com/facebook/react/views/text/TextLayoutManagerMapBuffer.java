@@ -133,6 +133,8 @@ public class TextLayoutManagerMapBuffer {
           fragment.contains(FR_KEY_REACT_TAG) ? fragment.getInt(FR_KEY_REACT_TAG) : View.NO_ID;
       if (fragment.contains(FR_KEY_IS_ATTACHMENT) && fragment.getBoolean(FR_KEY_IS_ATTACHMENT)) {
         float width = PixelUtil.toPixelFromSP(fragment.getDouble(FR_KEY_WIDTH));
+        String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
+        FLog.w("React::" + TAG, methodName + " width: " + (width));
         float height = PixelUtil.toPixelFromSP(fragment.getDouble(FR_KEY_HEIGHT));
         ops.add(
             new SetSpanOperation(
@@ -142,6 +144,9 @@ public class TextLayoutManagerMapBuffer {
       } else if (end >= start) {
         if (textAttributes.mIsAccessibilityLink) {
           ops.add(new SetSpanOperation(start, end, new ReactClickableSpan(reactTag)));
+        }
+        if (textAttributes.mIsAccessibilityLink) {
+          // ops.add(new SetSpanOperation(start, end, new ReactLeadingMarginSpan.Standard(0)));
         }
         if (textAttributes.mIsColorSet) {
           ops.add(
@@ -164,6 +169,7 @@ public class TextLayoutManagerMapBuffer {
                 end,
                 new ReactAbsoluteSizeSpan(
                     textAttributes.mFontSize, textAttributes.mTextAlignVertical)));
+
         if (textAttributes.mFontStyle != UNSET
             || textAttributes.mFontWeight != UNSET
             || textAttributes.mFontFamily != null) {

@@ -24,6 +24,7 @@ const {
   Text,
   View,
   Button,
+  Image,
 } = require('react-native');
 
 class Entity extends React.Component<{|children: React.Node|}> {
@@ -254,6 +255,45 @@ class NestedTextVerticalAlign extends React.Component<
       textAlignVerticalIndex === 0 ? 0 : textAlignVerticalIndex + 2;
     return (
       <>
+        <RNTesterBlock title={`without lineHeight ${textAlignVertical}`}>
+          <Text>
+            vertical align is set to{' '}
+            <Text style={{backgroundColor: 'red'}}>{textAlignVertical}</Text>
+          </Text>
+          <Button
+            onPress={this._changeVerticalAlign}
+            title="Set vertical align top or bottom"
+          />
+          <Button
+            onPress={() => this.setState({textAlignVerticalIndex: 0})}
+            title="set vertical align CENTER"
+          />
+          <Button onPress={this._increaseFont} title="increase font" />
+          <View>
+            <Text>
+              <Image
+                source={{uri: 'https://via.placeholder.com/100'}}
+                style={{
+                  width: 25,
+                  height: 25,
+                }}
+              />
+              <Text
+                accessibilityRole="link"
+                style={{
+                  lineHeight: 70,
+                  fontSize,
+                  backgroundColor: 'yellow',
+                  textAlignVertical,
+                }}>
+                This is long text it should wrap around the image. Lorem ipsum
+                even more haha that's kind of cool. Is this working? It is but
+                it's only keeping the first line of text and then the second
+                line and on are on top of the image.
+              </Text>
+            </Text>
+          </View>
+        </RNTesterBlock>
         <RNTesterBlock title="lineHeight and verticalAlign">
           <Text>
             vertical align is set to{' '}
@@ -279,72 +319,23 @@ class NestedTextVerticalAlign extends React.Component<
                 textAlignVertical,
                 backgroundColor: 'yellow',
               }}>
-              parent
+              parent{' '}
+              <Image
+                source={{uri: 'https://via.placeholder.com/100'}}
+                style={{
+                  width: 100,
+                  height: 100,
+                }}
+              />
               <Text
                 style={{
                   fontSize,
                   textAlignVertical,
                   backgroundColor: 'green',
-                  color: 'white',
+                  color: 'red',
+                  width: 50,
                 }}>
                 span aligned {textAlignVertical}
-              </Text>
-              <Text
-                style={{
-                  fontSize: 8,
-                  textAlignVertical:
-                    textAlignVerticalOptions[
-                      textAlignVerticalOppositeSideIndex % 3
-                    ],
-                  lineHeight: 100,
-                  backgroundColor: 'red',
-                }}>
-                span aligned
-                {
-                  textAlignVerticalOptions[
-                    textAlignVerticalOppositeSideIndex % 3
-                  ]
-                }
-              </Text>
-              <Text
-                style={{
-                  textAlignVertical: 'center',
-                  backgroundColor: 'blue',
-                  color: 'white',
-                }}>
-                span aligned center{' '}
-              </Text>
-            </Text>
-          </View>
-        </RNTesterBlock>
-        <RNTesterBlock title={`without lineHeight ${textAlignVertical}`}>
-          <Text>
-            vertical align is set to{' '}
-            <Text style={{backgroundColor: 'red'}}>{textAlignVertical}</Text>
-          </Text>
-          <Button
-            onPress={this._changeVerticalAlign}
-            title="Set vertical align top or bottom"
-          />
-          <Button
-            onPress={() => this.setState({textAlignVerticalIndex: 0})}
-            title="set vertical align CENTER"
-          />
-          <Button onPress={this._increaseFont} title="increase font" />
-          <View>
-            <Text
-              style={{
-                height: 300,
-                backgroundColor: 'yellow',
-              }}>
-              <Text
-                style={{
-                  fontSize,
-                  textAlignVertical,
-                  backgroundColor: 'green',
-                  color: 'white',
-                }}>
-                CusToM FonTjJYy
               </Text>
             </Text>
           </View>

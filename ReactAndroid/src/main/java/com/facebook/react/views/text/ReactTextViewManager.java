@@ -8,9 +8,11 @@
 package com.facebook.react.views.text;
 
 import android.content.Context;
+import android.text.Layout;
 import android.text.Spannable;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import com.facebook.common.logging.FLog;
 import com.facebook.react.R;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableNativeMap;
@@ -43,6 +45,7 @@ public class ReactTextViewManager
   private static final short TX_STATE_KEY_MOST_RECENT_EVENT_COUNT = 3;
 
   @VisibleForTesting public static final String REACT_CLASS = "RCTText";
+  private static final String TAG = "ReactTextViewManager";
 
   protected @Nullable ReactTextViewManagerCallback mReactTextViewManagerCallback;
 
@@ -102,37 +105,97 @@ public class ReactTextViewManager
           view, view.isFocusable(), view.getImportantForAccessibility());
     }
 
+    TextInlineViewPlaceholderSpan[] placeholders =
+        spannable.getSpans(0, spannable.length(), TextInlineViewPlaceholderSpan.class);
+    HashMap<Integer, Integer> imageLineHeights = new HashMap<Integer, Integer>();
+    Layout layout = view.getLayout();
+    int highestLineHeight = 0;
+    int highestImageLineHeight = 0;
+    if (layout != null && placeholders.length > 0) {
+      for (TextInlineViewPlaceholderSpan placeholder : placeholders) {
+        int start = spannable.getSpanStart(placeholder);
+        int end = spannable.getSpanEnd(placeholder);
+        String text = String.valueOf(spannable.subSequence(start, end));
+        int height = placeholder.getHeight();
+        String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
+        FLog.w("React::" + TAG, methodName + " text: " + (text) + " height: " + (height));
+        // highestLineHeight = height;
+        int line = layout.getLineForOffset(start);
+        if (imageLineHeights.get(line) != null && imageLineHeights.get(line) > height) {
+          imageLineHeights.put(line, height);
+        }
+        if (imageLineHeights.get(line) == null) {
+          imageLineHeights.put(line, height);
+        }
+        if (highestImageLineHeight == 0 || height > highestImageLineHeight) {
+          highestImageLineHeight = height;
+        }
+      }
+    }
+
     CustomLineHeightSpan[] customLineHeightSpans =
         spannable.getSpans(0, spannable.length(), CustomLineHeightSpan.class);
     ReactAbsoluteSizeSpan[] absoluteSizeSpans =
         spannable.getSpans(0, spannable.length(), ReactAbsoluteSizeSpan.class);
-    if (customLineHeightSpans.length > 0 && absoluteSizeSpans.length > 0) {
-      int highestLineHeight = 0;
-      for (CustomLineHeightSpan span : customLineHeightSpans) {
-        if (highestLineHeight == 0 || span.getLineHeight() > highestLineHeight) {
-          highestLineHeight = span.getLineHeight();
-        }
-      }
-
-      int highestFontSize = 0;
-      boolean textAlignVerticalSet = false;
-      if (highestLineHeight != 0) {
-        for (ReactAbsoluteSizeSpan span : absoluteSizeSpans) {
-          if (highestFontSize == 0 || span.getSize() > highestFontSize) {
-            highestFontSize = span.getSize();
-          }
-          if (span.getTextAlignVertical() != "center-child") {
-            textAlignVerticalSet = true;
-          }
-        }
-
-        if (textAlignVerticalSet) {
-          for (ReactAbsoluteSizeSpan span : absoluteSizeSpans) {
-            span.updateSpan(highestLineHeight, highestFontSize);
-          }
-        }
+    // if (customLineHeightSpans.length > 0 && absoluteSizeSpans.length > 0) {
+    for (CustomLineHeightSpan span : customLineHeightSpans) {
+      if (highestLineHeight == 0 || span.getLineHeight() > highestLineHeight) {
+        highestLineHeight = span.getLineHeight();
       }
     }
+
+    int highestFontSize = 0;
+    boolean textAlignVerticalSet = false;
+    // if (highestLineHeight != 0) {
+    for (ReactAbsoluteSizeSpan span : absoluteSizeSpans) {
+      int start = spannable.getSpanStart(span);
+      int end = spannable.getSpanEnd(span);
+      String text = String.valueOf(spannable.subSequence(start, end));
+      String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
+      if (highestFontSize == 0 || span.getSize() > highestFontSize) {
+        highestFontSize = span.getSize();
+      }
+      if (span.getTextAlignVertical() != "center-child") {
+        textAlignVerticalSet = true;
+      }
+    }
+
+    if (layout != null) {
+      for (ReactAbsoluteSizeSpan span : absoluteSizeSpans) {
+        int start = spannable.getSpanStart(span);
+        int end = spannable.getSpanEnd(span);
+        String text = String.valueOf(spannable.subSequence(start, end));
+        int currentLine = layout.getLineForOffset(start);
+        String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
+        if (layout.getLineEnd(currentLine) < end) {
+          // we don't support vertical text align for spans that
+          // are on multiple lines and we avoid aligning them
+          // requires us to create a spannable subsequence for that line
+          // and align the newly create span
+          // return;
+        }
+        int inlineImageHeight =
+            imageLineHeights != null && imageLineHeights.get(currentLine) != null
+                ? imageLineHeights.get(currentLine)
+                : 0;
+
+        if (highestImageLineHeight > highestLineHeight) {
+          highestLineHeight = 0;
+        }
+        FLog.w(
+            "React::" + TAG,
+            methodName
+                + " text: "
+                + (text)
+                + " imageLineHeights.get(currentLine): "
+                + (imageLineHeights.get(currentLine))
+                + " currentLine: "
+                + (currentLine));
+        span.updateSpan(highestLineHeight, highestFontSize);
+      }
+    }
+    // }
+    // }
   }
 
   @Override
