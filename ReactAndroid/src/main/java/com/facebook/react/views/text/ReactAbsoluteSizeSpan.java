@@ -9,6 +9,7 @@ package com.facebook.react.views.text;
 
 import android.text.TextPaint;
 import android.text.style.AbsoluteSizeSpan;
+import com.facebook.common.logging.FLog;
 
 /*
  * Wraps {@link AbsoluteSizeSpan} as a {@link ReactSpan}.
@@ -78,6 +79,14 @@ public class ReactAbsoluteSizeSpan extends AbsoluteSizeSpan implements ReactSpan
           ds.baselineShift += mHighestLineHeight / 2 - mHighestFontSize / 2 - ds.descent();
         }
       }
+      String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
+      FLog.w(
+          "React::" + TAG,
+          methodName
+              + " ds.baselineShift: "
+              + (ds.baselineShift)
+              + " mTextAlignVertical: "
+              + (mTextAlignVertical));
     }
   }
 

@@ -9,6 +9,7 @@ package com.facebook.react.views.text;
 
 import android.graphics.drawable.Drawable;
 import android.text.Spannable;
+import android.text.TextPaint;
 import android.text.style.ReplacementSpan;
 import android.view.View;
 import android.widget.TextView;
@@ -56,4 +57,9 @@ public abstract class TextInlineImageSpan extends ReplacementSpan implements Rea
 
   /** Get the height of the span. */
   public abstract int getHeight();
+
+  @Override
+  public void updateDrawState(TextPaint ds) {
+    ds.baselineShift += 100;
+  }
 }
