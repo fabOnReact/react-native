@@ -26,6 +26,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readonly) BOOL textWasPasted;
 @property (nonatomic, copy, nullable) NSString *placeholder;
 @property (nonatomic, strong, nullable) UIColor *placeholderColor;
+@property (nonatomic, assign) CGRect fragmentViewContainerBounds;
+@property (nonatomic, assign) UIEdgeInsets textBorderInsets;
+@property (nonatomic, assign) UIControlContentVerticalAlignment contentVerticalAlignment;
 
 @property (nonatomic, assign) CGFloat preferredMaxLayoutWidth;
 
