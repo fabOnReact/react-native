@@ -530,8 +530,6 @@ RCT_NOT_IMPLEMENTED(-(instancetype)initWithFrame : (CGRect)frame)
   }
 
   RCTTextSelection *selection = self.selection;
-  UITextRange *selectedTextRange = self.backedTextInputView.selectedTextRange;
-  CGPoint selectionOrigin = [self.backedTextInputView caretRectForPosition:selectedTextRange.start].origin;
 
   _onSelectionChange(@{
     @"selection" : @{
