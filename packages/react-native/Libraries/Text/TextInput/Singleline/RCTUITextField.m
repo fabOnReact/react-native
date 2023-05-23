@@ -172,7 +172,7 @@
     // sets the correct y coordinates for _UITextLayoutFragmentView
     return UIEdgeInsetsInsetRect([super textRectForBounds:self.fragmentViewContainerBounds], borderAndPaddingInsets);
   } else {
-      return UIEdgeInsetsInsetRect([super textRectForBounds:bounds], borderAndPaddingInsets);
+    return UIEdgeInsetsInsetRect([super textRectForBounds:bounds], borderAndPaddingInsets);
   }
 }
 
