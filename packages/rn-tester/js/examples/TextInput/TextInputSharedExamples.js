@@ -840,7 +840,6 @@ module.exports = ([
     render: function (): React.Node {
       return (
         <TextInput
-          autoFocus={true}
           style={styles.default}
           accessibilityLabel="I am the accessibility label for text input"
         />
