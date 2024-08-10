@@ -83,6 +83,7 @@ function TextInputExampleWithChildren() {
   );
 }
 
+// This example does not implement onBlur and onFocus logic, but it is demonstrated above.
 function TextInputExampleLineHeightProp() {
   // const [value, setValue] = React.useState('\u200b');
   // Comment this to reproduce the issue
