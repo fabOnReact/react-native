@@ -5,11 +5,13 @@ const RNTesterApp = () => {
   return (
     <View style={styles.container}>
       <TextInputExampleWithChildren />
+      <TextInput />
     </View>
   );
 };
 
 function TextInputExampleWithChildren() {
+  const textInputRef = React.useRef();
   const [value, setValue] = React.useState('\u200b');
   // Uncomment this to reproduce the issue
   // const [value, setValue] = React.useState('');
@@ -23,19 +25,39 @@ function TextInputExampleWithChildren() {
 
   // Comment this to reproduce the issue
   React.useEffect(() => {
-    if (value.length === 0) {
+    if (
+      textInputRef.current &&
+      value.length === 0 &&
+      textInputRef.current.isFocused()
+    ) {
       setValue('\u200b');
     }
   }, [value]);
 
+  const onBlurCallback = () => {
+    if (value.length === 0 || value === '\u200b') {
+      setValue('');
+    }
+  };
+
+  const onFocusCallback = () => {
+    if (value.length === 0) {
+      setValue('\u200b');
+    }
+  };
+
   return (
     <>
       <TextInput
+        ref={textInputRef}
         multiline
         style={{
           backgroundColor: 'red',
           height: 50,
         }}
+        placeholder="my placeholder"
+        onBlur={onBlurCallback}
+        onFocus={onFocusCallback}
         onChangeText={text => setValue(text)}>
         <Text style={{lineHeight}}>{value}</Text>
       </TextInput>
@@ -52,9 +74,9 @@ function TextInputExampleWithChildren() {
 }
 
 function TextInputExampleLineHeightProp() {
-  const [value, setValue] = React.useState('\u200b');
+  // const [value, setValue] = React.useState('\u200b');
   // Comment this to reproduce the issue
-  // const [value, setValue] = React.useState('');
+  const [value, setValue] = React.useState('');
   const [lineHeight, setLineHeight] = React.useState(50);
   const increaseLineHeight = () => {
     setLineHeight(prevLineHeight => prevLineHeight + 10);
@@ -63,13 +85,13 @@ function TextInputExampleLineHeightProp() {
     setLineHeight(prevLineHeight => prevLineHeight - 10);
   };
 
-  React.useEffect(() => {
-    if (value.length === 0) {
-      setValue('\u200b');
-    }
-  }, [value]);
-
   // Comment this to reproduce the issue
+  // React.useEffect(() => {
+  //   if (value.length === 0) {
+  //     setValue('\u200b');
+  //   }
+  // }, [value]);
+
   return (
     <>
       <TextInput
