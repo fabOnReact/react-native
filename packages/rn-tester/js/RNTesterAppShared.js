@@ -12,8 +12,12 @@ const RNTesterApp = () => {
 
 function TextInputExampleWithChildren() {
   const textInputRef = React.useRef();
+  // The TextInput is a controlled component.
+  // The value is the text displayed in the TextInput.
+  // Initial value is zero-width-character.
   const [value, setValue] = React.useState('\u200b');
   // Uncomment this to reproduce the issue
+  // Instead of using zero-width-character, we use empty string.
   // const [value, setValue] = React.useState('');
   const [lineHeight, setLineHeight] = React.useState(50);
   const increaseLineHeight = () => {
@@ -24,6 +28,7 @@ function TextInputExampleWithChildren() {
   };
 
   // Comment this to reproduce the issue
+  // When deleting the text, avoid using empty string.
   React.useEffect(() => {
     if (
       textInputRef.current &&
@@ -34,12 +39,17 @@ function TextInputExampleWithChildren() {
     }
   }, [value]);
 
+  // Comment this to reproduce the issue
+  // If the textinput is empty, onBlur we set it to empty string
+  // to display the placeholder
   const onBlurCallback = () => {
     if (value.length === 0 || value === '\u200b') {
       setValue('');
     }
   };
 
+  // Comment this to reproduce the issue
+  // onFocus we set it to zero-width-character to avoid issues with lineHeight
   const onFocusCallback = () => {
     if (value.length === 0) {
       setValue('\u200b');
