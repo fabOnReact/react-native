@@ -637,6 +637,7 @@ public class ReactTextView extends AppCompatTextView implements ReactCompoundVie
   }
 
   public void setNumberOfLines(int numberOfLines) {
+    FLog.w("TESTING ", "ReactTextView setNumberOfLines: " + numberOfLines);
     mNumberOfLines = numberOfLines == 0 ? ViewDefaults.NUMBER_OF_LINES : numberOfLines;
     setMaxLines(mNumberOfLines);
     mShouldAdjustSpannableFontSize = true;
@@ -693,6 +694,7 @@ public class ReactTextView extends AppCompatTextView implements ReactCompoundVie
   }
 
   public void setEllipsizeLocation(@Nullable TextUtils.TruncateAt ellipsizeLocation) {
+    FLog.w("TESTING ", "ReactTextView setEllipsizeLocation: " + ellipsizeLocation);
     mEllipsizeLocation = ellipsizeLocation;
   }
 

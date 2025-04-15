@@ -62,11 +62,13 @@ public abstract class ReactTextAnchorViewManager<T extends View, C extends React
   // maxLines can only be set in master view (block), doesn't really make sense to set in a span
   @ReactProp(name = ViewProps.NUMBER_OF_LINES, defaultInt = ViewDefaults.NUMBER_OF_LINES)
   public void setNumberOfLines(ReactTextView view, int numberOfLines) {
+    FLog.w("TESTING ", "ReactTextAnchorViewManager setNumberOfLines: " + numberOfLines);
     view.setNumberOfLines(numberOfLines);
   }
 
   @ReactProp(name = ViewProps.ELLIPSIZE_MODE)
   public void setEllipsizeMode(ReactTextView view, @Nullable String ellipsizeMode) {
+    FLog.w("TESTING ", "ReactTextAnchorViewManager setEllipsizeMode: " + ellipsizeMode);
     if (ellipsizeMode == null || ellipsizeMode.equals("tail")) {
       view.setEllipsizeLocation(TextUtils.TruncateAt.END);
     } else if (ellipsizeMode.equals("head")) {
