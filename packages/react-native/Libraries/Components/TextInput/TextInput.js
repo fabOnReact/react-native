@@ -216,6 +216,7 @@ function useTextInputStateSynchronization({
     }
 
     if (inputRef.current != null) {
+      console.log('setTextAndSelection');
       viewCommands.setTextAndSelection(
         inputRef.current,
         mostRecentEventCount,

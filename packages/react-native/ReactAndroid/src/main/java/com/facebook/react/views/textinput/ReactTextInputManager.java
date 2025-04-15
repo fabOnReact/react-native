@@ -328,6 +328,7 @@ public class ReactTextInputManager extends BaseViewManager<ReactEditText, Layout
 
   @Override
   public void updateExtraData(ReactEditText view, Object extraData) {
+    FLog.w("TESTING ", "ReactTextInputManager updateExtraData " + extraData);
     if (extraData instanceof ReactTextUpdate) {
       ReactTextUpdate update = (ReactTextUpdate) extraData;
 
@@ -764,6 +765,7 @@ public class ReactTextInputManager extends BaseViewManager<ReactEditText, Layout
 
   @ReactProp(name = ViewProps.NUMBER_OF_LINES, defaultInt = 1)
   public void setNumLines(ReactEditText view, int numLines) {
+    FLog.w("TESTING ", "ReactTextInputManager setNumLines " + numLines);
     view.setLines(numLines);
   }
 

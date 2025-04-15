@@ -8,12 +8,13 @@ const ELLIPSIZE_MODES = {
 };
 
 function RNTesterApp() {
-  const [fontSize, setFontSize] = useState(20);
+  const [fontSize, setFontSize] = useState(10);
   const [lineHeight, setLineHeight] = useState(30);
-  const [numberOfLines, setNumberOfLines] = useState(1);
+  const [numberOfLines, setNumberOfLines] = useState(2);
   const [ellipsizeMode, setEllipsizeMode] = useState(ELLIPSIZE_MODES.HEAD);
+  const [value, setValue] = useState('nested controlled text');
   const changeFontSize = () => {
-    setFontSize(prev => (prev === 20 ? 30 : 20));
+    setFontSize(prev => prev + 20);
   };
   const changeLineHeight = () => {
     setLineHeight(prev => (prev === 30 ? 40 : 30));
@@ -26,7 +27,7 @@ function RNTesterApp() {
   };
 
   const changeNumberOfLines = () => {
-    setNumberOfLines(prev => (prev == 2 ? 1 : 2));
+    setNumberOfLines(prev => (prev === 2 ? 1 : 2));
   };
 
   const changeEllipsizeMode = () => {
@@ -44,11 +45,25 @@ function RNTesterApp() {
     });
   };
 
+  const changeText = text => {
+    console.log('do nothing');
+    // setText(text);
+  };
+
+  const defaultValue = 'default value never changes';
   return (
     <View style={styles.container}>
-      <Text numberOfLines={numberOfLines} ellipsizeMode={ellipsizeMode}>
-        React TextView <Text style={nestedTextStyles}>Span</Text>
-      </Text>
+      <Text>numberOfLines: {numberOfLines}</Text>
+      <TextInput
+        multiline
+        numberOfLines={numberOfLines}
+        style={styles.input}
+        onChangeText={changeText}>
+        {' '}
+        <Text ellipsizeMode={ellipsizeMode}>
+          Not controlled<Text style={nestedTextStyles}>{defaultValue}</Text>
+        </Text>
+      </TextInput>
       <TextInput>Text Input 2</TextInput>
       <Button title="change font size" onPress={changeFontSize} />
       <Button title="change line height" onPress={changeLineHeight} />

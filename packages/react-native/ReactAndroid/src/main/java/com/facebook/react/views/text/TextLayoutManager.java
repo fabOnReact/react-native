@@ -109,16 +109,12 @@ public class TextLayoutManager {
       new ConcurrentHashMap<>();
 
   public static void setCachedSpannableForTag(int reactTag, @NonNull Spannable sp) {
-    if (ENABLE_MEASURE_LOGGING) {
-      FLog.e(TAG, "Set cached spannable for tag[" + reactTag + "]: " + sp.toString());
-    }
+    FLog.e(TAG, "Set cached spannable for tag[" + reactTag + "]: " + sp.toString());
     sTagToSpannableCache.put(reactTag, sp);
   }
 
   public static void deleteCachedSpannableForTag(int reactTag) {
-    if (ENABLE_MEASURE_LOGGING) {
-      FLog.e(TAG, "Delete cached spannable for tag[" + reactTag + "]");
-    }
+    FLog.e(TAG, "Delete cached spannable for tag[" + reactTag + "]");
     sTagToSpannableCache.remove(reactTag);
   }
 
@@ -262,7 +258,7 @@ public class TextLayoutManager {
           ops.add(new SetSpanOperation(start, end, new ReactClickableSpan(reactTag)));
         }
         if (textAttributes.mIsColorSet) {
-          FLog.w("TESTING ", "setting color" );
+          FLog.w("TESTING ", "TextLayoutManager setting color" );
           ops.add(
               new SetSpanOperation(
                   start, end, new ReactForegroundColorSpan(textAttributes.mColor)));
@@ -281,7 +277,7 @@ public class TextLayoutManager {
               new SetSpanOperation(
                   start, end, new CustomLetterSpacingSpan(textAttributes.getLetterSpacing())));
         }
-        FLog.w("TESTING ", "adding ReactAbsoluteSizeSpan" );
+        FLog.w("TESTING ", "TextLayoutManager adding ReactAbsoluteSizeSpan" );
         ops.add(
             new SetSpanOperation(start, end, new ReactAbsoluteSizeSpan(textAttributes.mFontSize)));
         if (textAttributes.mFontStyle != ReactConstants.UNSET
@@ -319,7 +315,7 @@ public class TextLayoutManager {
                       textAttributes.mTextShadowColor)));
         }
         if (!Float.isNaN(textAttributes.getEffectiveLineHeight())) {
-          FLog.w("TESTING ", "setting line height" );
+          FLog.w("TESTING ", "TextLayoutManager setting line height" );
           ops.add(
               new SetSpanOperation(
                   start, end, new CustomLineHeightSpan(textAttributes.getEffectiveLineHeight())));
@@ -825,21 +821,19 @@ public class TextLayoutManager {
     float widthInSP = PixelUtil.toDIPFromPixel(calculatedWidth);
     float heightInSP = PixelUtil.toDIPFromPixel(calculatedHeight);
 
-    if (ENABLE_MEASURE_LOGGING) {
-      FLog.e(
-          TAG,
-          "TextMeasure call ('"
-              + text
-              + "'): w: "
-              + calculatedWidth
-              + " px - h: "
-              + calculatedHeight
-              + " px - w : "
-              + widthInSP
-              + " sp - h: "
-              + heightInSP
-              + " sp");
-    }
+    FLog.e(
+        TAG,
+        "TextMeasure call ('"
+        + text
+        + "'): w: "
+        + calculatedWidth
+        + " px - h: "
+        + calculatedHeight
+        + " px - w : "
+        + widthInSP
+        + " sp - h: "
+        + heightInSP
+        + " sp");
 
     return YogaMeasureOutput.make(widthInSP, heightInSP);
   }
