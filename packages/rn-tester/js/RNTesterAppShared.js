@@ -44,7 +44,7 @@ function RNTesterApp() {
       <TextInput
         multiline={true}
         textAlign={'center'}
-        numberOfLines={50}
+        numberOfLines={40}
         style={styles.input}
         onChangeText={onChangeText}>
         A very long long long long long{' '}

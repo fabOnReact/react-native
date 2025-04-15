@@ -721,7 +721,7 @@ public class ReactEditText extends AppCompatEditText {
       // When we update text, we trigger onChangeText code that will
       // try to update state if the wrapper is available. Temporarily disable
       // to prevent an infinite loop.
-      FLog.w("TESTING ", "ReactEditText setText: " + reactTextUpdate.getText());
+      FLog.w("TESTING ", "ReactEditText getText().replaces text with new text");
       getText().replace(0, length(), spannableStringBuilder);
     }
     mDisableTextDiffing = false;
