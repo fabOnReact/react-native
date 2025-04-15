@@ -258,7 +258,6 @@ public class TextLayoutManager {
           ops.add(new SetSpanOperation(start, end, new ReactClickableSpan(reactTag)));
         }
         if (textAttributes.mIsColorSet) {
-          FLog.w("TESTING ", "TextLayoutManager setting color" );
           ops.add(
               new SetSpanOperation(
                   start, end, new ReactForegroundColorSpan(textAttributes.mColor)));
@@ -277,7 +276,6 @@ public class TextLayoutManager {
               new SetSpanOperation(
                   start, end, new CustomLetterSpacingSpan(textAttributes.getLetterSpacing())));
         }
-        FLog.w("TESTING ", "TextLayoutManager adding ReactAbsoluteSizeSpan" );
         ops.add(
             new SetSpanOperation(start, end, new ReactAbsoluteSizeSpan(textAttributes.mFontSize)));
         if (textAttributes.mFontStyle != ReactConstants.UNSET
@@ -315,7 +313,6 @@ public class TextLayoutManager {
                       textAttributes.mTextShadowColor)));
         }
         if (!Float.isNaN(textAttributes.getEffectiveLineHeight())) {
-          FLog.w("TESTING ", "TextLayoutManager setting line height" );
           ops.add(
               new SetSpanOperation(
                   start, end, new CustomLineHeightSpan(textAttributes.getEffectiveLineHeight())));
