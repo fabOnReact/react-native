@@ -4,12 +4,21 @@ import {View, TextInput, StyleSheet, Button, Text} from 'react-native';
 function RNTesterApp() {
   const [fontSize, setFontSize] = useState(10);
   const [multiline, setMultiline] = useState();
-  const [value, setValue] = useState('A word. ');
+  const [value, setValue] = useState('A nested text ');
   const [lineHeight, setLineHeight] = useState(10);
   const [letterSpacing, setLetterSpacing] = useState(5);
   const [verticalAlign, setVerticalAlign] = useState('top');
   const [textTransform, setTextTransform] = useState('uppercase');
-  const onChangeText = text => setValue(text);
+
+  const onChangeText = text => {
+    setLineHeight(prev => prev + 1);
+    setLetterSpacing(prev => prev + 1);
+    setVerticalAlign(prev => (prev === 'top' ? 'bottom' : 'top'));
+    setTextTransform(prev =>
+      prev === 'uppercase' ? 'lowercase' : 'uppercase',
+    );
+    setValue(text);
+  };
 
   const changeMultiline = () => {
     setMultiline(prev => !prev);
@@ -49,7 +58,6 @@ function RNTesterApp() {
         numberOfLines={40}
         style={styles.input}
         onChangeText={onChangeText}>
-        A very long long long long long{' '}
         <Text style={redTextStyles}>
           {value}
           <Text style={greedTextStyles}>{value}</Text>
