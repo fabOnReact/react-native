@@ -3,7 +3,6 @@ import {View, TextInput, StyleSheet, Button, Text} from 'react-native';
 
 function RNTesterApp() {
   const [fontSize, setFontSize] = useState(10);
-  const [multiline, setMultiline] = useState();
   const [value, setValue] = useState('A nested text ');
   const [lineHeight, setLineHeight] = useState(10);
   const [letterSpacing, setLetterSpacing] = useState(5);
@@ -17,9 +16,19 @@ function RNTesterApp() {
     setTextTransform(prev =>
       prev === 'uppercase' ? 'lowercase' : 'uppercase',
     );
-    setValue(text);
+    const newSpans = text.split(' ').map((word, index) => (
+      <Text key={index} style={getTextStyles()}>
+        {word + ' '}
+      </Text>
+    ));
+    setValue(newSpans.join(' '));
   };
 
+  const RANDOM_COLORS = ['red', 'green', 'blue', 'yellow', 'purple'];
+  const getRandomColor = () => {
+    const randomIndex = Math.floor(Math.random() * RANDOM_COLORS.length);
+    return RANDOM_COLORS[randomIndex];
+  };
   const changeMultiline = () => {
     setMultiline(prev => !prev);
   };
@@ -40,14 +49,12 @@ function RNTesterApp() {
     fontWeight: 'bold',
   };
 
-  const redTextStyles = {
-    ...textStyles,
-    color: 'red',
-  };
-
-  const greedTextStyles = {
-    ...textStyles,
-    color: 'green',
+  const getTextStyles = () => {
+    return {
+      ...textStyles,
+      color: getRandomColor(),
+      backgroundColor: getRandomColor(),
+    };
   };
 
   return (
@@ -58,10 +65,7 @@ function RNTesterApp() {
         numberOfLines={40}
         style={styles.input}
         onChangeText={onChangeText}>
-        <Text style={redTextStyles}>
-          {value}
-          <Text style={greedTextStyles}>{value}</Text>
-        </Text>
+        {value}
       </TextInput>
       <Button title="change font size" onPress={changeFontSize} />
       <Button title="change multiline" onPress={changeMultiline} />
